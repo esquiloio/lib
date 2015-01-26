@@ -1,0 +1,27 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
+html { height: 100%; }
+
+body {
+  height: 100%;
+  color: #555;
+  font-family: "Roboto";
+  font-weight: 100;
+  background: linear-gradient(to bottom, rgba(41,184,229,1) 0%,rgba(188,224,238,1) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+h1 { font-size: 80px; }
+h2 { font-size: 58px; }
+h3 { font-size: 36px; }
+
+.box {
+  width: 234px;
+  height: 234px;
+  margin: 10px;
+  display: inline-block;
+  border-radius: 30px;
+  border: 2px solid #555;
+  text-align: center;
+}

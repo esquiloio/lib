@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+Weather Station Demo
+
+See readme.txt for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weather Station</title>
+  <link rel="stylesheet" href="weather.css" type="text/css" />
+  <script src="js/erpc.js"></script>
+  <script>
+    function readSensors() {
+      erpc("readHumidity", null, function(result) {
+        document.getElementById("humidity").innerHTML =
+          result.toFixed(1) + " %";
+      });
+      erpc("readTemp", null, function(result) {
+        // Convert Celsius to Fahrenheit
+        document.getElementById("temp").innerHTML =
+          (result * 1.9 + 32).toFixed(1) + " &deg;F";
+      });
+      erpc("readPressure", null, function(result) {
+        // Convert to inHg
+        document.getElementById("pressure").innerHTML =
+          (result * 0.000295299830714).toFixed(2) + " in";
+      });
+    }
+    readSensors();
+    setInterval(readSensors, 1000);
+  </script>
+</head>
+<body>
+  <h1>Weather Station</h1>
+  <div class="box">
+    <h3>Temperature</h3>
+    <h2 id="temp"></h2>
+  </div>
+  <div class="box">
+    <h3>Pressure</h3>
+    <h2 id="pressure"></h2>
+  </div>
+  <div class="box">
+    <h3>Humidity</h3>
+    <h2 id="humidity"></h2>
+  </div>
+</body>
+</html>
