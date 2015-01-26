@@ -36,6 +36,6 @@ or from the Esquilo Nest:
 
 License
 -------
-This work is release under the Creative Commons Zero (CC0) license.
+This work is released under the Creative Commons Zero (CC0) license.
 See http://creativecommons.org/publicdomain/zero/1.0/
 
