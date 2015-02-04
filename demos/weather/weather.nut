@@ -5,13 +5,11 @@
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 
-// Read temperature from MCP9080
+// Read temperature from HTU21D
 function readTemp() {
-  i2c.address(0x18);
-  local data = i2c.read16(0x5);
-  local temp = (data & 0xfff) / 16.0;
-  if (data & 0x1000)
-    temp = temp - 256.0;
+  i2c.address(0x40);
+  local temp = i2c.read24(0xe3) >> 8;
+  temp = -46.85 + 175.75 * temp / 65536.0;
   return temp;
 }
 
