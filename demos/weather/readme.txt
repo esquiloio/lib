@@ -1,14 +1,16 @@
 Weather Station Demo
 ====================
 The weather station demo shows a live view of the current weather conditions
-at your Esquilo from any web browser.  The demo utilizes three sensor
+at your Esquilo from any web browser.  The demo utilizes two sensor
 devices:
 
   * Freescale MPL3115A2 for barometric pressure
-  * Measurement Specialties HTU21D-F for humidity
-  * Microchip MCP9808 for temperature
+  * Measurement Specialties HTU21D-F for humidity and temperature
 
-All three sensor devices must be installed on the I2C0 bus on your Esquilo.
+Both sensor devices must be installed on the I2C0 bus on your Esquilo.  You can
+buy a ready-made Arduino shield that contains these two devices from SparkFun:
+
+[SparkFun Weather Shield](https://www.sparkfun.com/products/12081)
 
 The demo consists of three files:
 
