@@ -78,7 +78,7 @@ class Zone
     }
     
     // Function:    setOff
-    // Description: Immediateld turn zone off and schedule the next on time
+    // Description: Immediately turn zone off and schedule the next on time
     function setOff()
     {
         const SECS_PER_DAY = 86400;
