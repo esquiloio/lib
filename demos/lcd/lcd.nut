@@ -14,36 +14,32 @@ const LCD_CURSOR   = 0x45;
 const LCD_CLEAR    = 0x51;
 const LCD_CONTRAST = 0x52;
 
-// TODO: placeholder
-function PWM(pwm, pin)
-{
-    return pin;
-}
-
 // LCD Class
 //
-// Manages a Newhaven 16x2 serial RGB LCD module controlled with a UART bus and
+// Manages a Newhaven 16x2 serial RGB LCD module controlled with a UART and
 // three PWM pins for the backlight.
 class Lcd
 {
     // Function:    Class Constructor
     // Description: Create
-    // Arguments:   _uart - UART object the LCD is attached to
-    //              pwm - number of PWM the LCD backlight pins are attached to
+    // Arguments:   _uart - UART object to control the display
+    //              _pwm - PWM object to control the backlight
     //              redChannel - PWM channel of red backlight
     //              greenChannel - PWM channel of green backlight
     //              blueChannel - PWM channel of blue backlight
-	constructor(_uart, pwm, redChannel, greenChannel, blueChannel)
+	constructor(_uart, _pwm, redChannel, greenChannel, blueChannel)
     {
         // Configure UART for 8 bits, no parity, 1 stop bit, 9600 bps
         uart = _uart;
         uart.mode(UART.MODE_8N1);
         uart.speed(9600);
+        
+        pwm = _pwm;
 
-        // Initialize backlight PWM channels
-        backlight.red.pwm   = PWM(pwm, redChannel);
-        backlight.green.pwm = PWM(pwm, greenChannel);
-        backlight.blue.pwm  = PWM(pwm, blueChannel);
+        // Backlight PWM channels
+        pwmChannel.red   = redChannel;
+        pwmChannel.green = greenChannel;
+        pwmChannel.blue  = blueChannel;
 
         // Initialize LCD with a clear screen, a default contrast, and powered off
         clear();
@@ -52,52 +48,43 @@ class Lcd
     }
 
     uart = null;
-    _isOn = false;
-    line = 0;
-    column = 0;
-    backlight = {
-        red = {
-            pwm   = null,
-            level = 0
-        },
-            green = {
-            pwm   = null,
-            level = 0
-        },
-            blue = {
-            pwm   = null,
-            level = 0
-        }
+    pwm = null;
+    pwmChannel = {
+        red   = null,
+        green = null,
+        blue   = null
     }
+    _isOn = false;
+    row = 0;
+    column = 0;
 
     // Function:    on
-    // Description: Turns the LCD display on. This will restore the backlight
-    //              settings to what they were before the LCD was turned off.
+    // Description: Turns display on
     function on()
     {
         _isOn = true;
         uart.puts(LCD_CMD.tochar());
         uart.puts(LCD_ON.tochar());
-        delay(1);
         _backlightOn();
+        delay(1);
     }
 
     // Function:    off
-    // Description: Turns the LCD display off. This will save the backlight
-    //              settings to restore when the LCD is turned back on.
+    // Description: Turns display off
     function off()
     {
         _isOn = false;
         uart.puts(LCD_CMD.tochar());
         uart.puts(LCD_OFF.tochar());
-        delay(1);
         _backlightOff();
+        delay(1);
     }
     
     // Function:    isOn
-    // Description: Tell if the LCD is on
+    // Description: Query display state
     // Returns:     true
-    function isOn() {
+    function isOn()
+    {
         return _isOn;
     }
 
@@ -105,7 +92,7 @@ class Lcd
     // Description: Clear text from the LCD display
     function clear()
     {
-        line = 0;
+        row = 0;
         column = 0;
         uart.puts(LCD_CMD.tochar());
         uart.puts(LCD_CLEAR.tochar());
@@ -113,11 +100,11 @@ class Lcd
     }
 
     // Function:    setCursor
-    // Description: Sets the cursor position on the the display
-    // Arguments:   position - The position to move the cursor on the 2-line
+    // Description: Sets the cursor position on the display
+    // Arguments:   position - The position to move the cursor on the 2-row
     //                         display.
-    //                           0x00 - 0x0f: line 1, column 1 - 16
-    //                           0x40 - 0x4f: line 2, column 1 - 16
+    //                           0x00 - 0x0f: row 1, column 1 - 16
+    //                           0x40 - 0x4f: row 2, column 1 - 16
     function setCursor(position)
     {
         switch (position & 0xf0) {
@@ -157,10 +144,10 @@ class Lcd
     {
         for (local i = 0; i < s.len(); i++) {
             local c = s[i].tochar();
-            if (line == 0 && (c == '\n' || column == 16)) {
-                // Got to second line
+            if (row == 0 && column == 16) {
+                // Got to second row
                 setCursor(0x40);
-                line = 1;
+                row = 1;
                 column = 0;
             }
             uart.puts(c);
@@ -175,33 +162,25 @@ class Lcd
     //              blue - Blue level (0 - 255)
     function setBacklight(red, green, blue)
     {
-        backlight.red.level   = red;
-        backlight.green.level = green;
-        backlight.blue.level  = blue;
-        _setBacklightLevels(red, green, blue);
+        pwm.duty_cycle(pwmChannel.red, (red * 100)/255);
+        pwm.duty_cycle(pwmChannel.green, (green * 100)/255);
+        pwm.duty_cycle(pwmChannel.blue, (blue * 100)/255);
     }
 
-    // ?
-    function close()
-    {
-        //  uart.close();
-    }
-
-    // Private methods (prefixed with '-' by convention)
-
-    function _backlightOff()
-    {
-        _setBacklightLevels(0, 0, 0);
-    }
-
+    // Private methods
+    
     function _backlightOn()
     {
-        _setBacklightLevels(backlight.red.level, backlight.green.level, backlight.blue.level);
+        pwm.on(pwmChannel.red);
+        pwm.on(pwmChannel.green);
+        pwm.on(pwmChannel.blue);
     }
-
-    function _setBacklightLevels(red, green, blue)
+    
+    function _backlightOff()
     {
-        // TODO: PWM
+        pwm.off(pwmChannel.red);
+        pwm.off(pwmChannel.green);
+        pwm.off(pwmChannel.blue);
     }
 }
 
@@ -210,7 +189,7 @@ class Lcd
 //
 
 // Function:    on
-// Description: Turns LCD power on
+// Description: Turns display on
 // Returns:     true
 function on() {
     lcd.on();
@@ -218,7 +197,7 @@ function on() {
 }
 
 // Function:    off
-// Description: Turns LCD power off
+// Description: Turns display off
 // Returns:     true
 function off() {
     lcd.off();
@@ -226,8 +205,8 @@ function off() {
 }
 
 // Function:    isOn
-// Description: Tell if the LCD is on
-// Returns:     true
+// Description: Query display state
+// Returns:     
 function isOn() {
     return lcd.isOn();
 }
@@ -259,8 +238,11 @@ function setMessage(params) {
 //                blue: blue backlight level (0 - 255)
 // Returns:     true
 function setBacklight(params) {
-	lcd.setBacklight(params.red, params.green, params.blue);
+	lcd.setBacklight(params.red.tointeger(), params.green.tointeger(), params.blue.tointeger());
 }
 
-// Initialize serial LCD
-lcd<-Lcd(UART(4), 0, 2, 3, 4);
+// Initialize serial LCD using UART0 and PWM1 channels 0 - 2
+lcd<-Lcd(UART(0), PWM(1), 0, 1, 2);
+lcd.print("Simple IoT      Development");
+lcd.setBacklight(0, 153, 239);
+lcd.on();

@@ -6,7 +6,7 @@ mobile app.
 # Requirements
 
 The demo uses a Newhaven serial RGB LCD module hooked up to the Esquilo's UART0
-for LCD control and PWM0 channels 0-2 for controlling the RGB backlight. The
+for LCD control and PWM1 channels 0-2 for controlling the RGB backlight. The
 compatible LCD modules are NHD-0216K3Z-FS(RGB)-FBW-V3 (positive display) and
 NHD-0216K3Z-NS(RGB)-FBW-V3 (negative display). Please see their website for more
 info:
@@ -33,15 +33,15 @@ to run the demo.
 
 Connect the LCD module to your Esquilo like so:
 
-| Esquilo Pin  | Newhaven LCD Pin        |
-| ------------ |-------------------------|
-| 1 (UART0 TX) |  J1:1 (RS-232 RX)       |
-| GND          |  J1:2 (RS-232 VSS)      |
-| 5V           |  J1:3 (RS-232 VDD       |
-| GND          |  J3:1 (Backlight GND)   |
-| 2 (PWM0 CH0) |  J3:2 (Backlight Red)   |
-| 3 (PWM0 CH1) |  J3:3 (Backlight Green) |
-| 4 (PWM0 CH2) |  J3:4 (Backlight Blue)  |
+| Esquilo Pin  | Newhaven LCD Pin        | Notes
+| ------------ |-------------------------|------------------------------------|
+| 1 (UART0 TX) |  J1:1 (RS-232 RX)       |                                    |
+| GND          |  J1:2 (RS-232 VSS)      |                                    |
+| 5V           |  J1:3 (RS-232 VDD       |                                    |
+| GND          |  J3:1 (Backlight GND)   |                                    |
+| 6 (PWM1:CH0) |  J3:2 (Backlight Red)   | ~33 Ohm current-limiting resistor  |
+| 7 (PWM1:CH1) |  J3:3 (Backlight Green) | ~120 Ohm current-limiting resistor |
+| 8 (PWM1:CH2) |  J3:4 (Backlight Blue)  | ~120 Ohm current-limiting resistor |
 
 ### NetIO App Installation
 
@@ -65,13 +65,13 @@ because the NetIO must be configured to connect to a pre-determined IP address.
 For convenience, this has been set to the default Esquilo access point address
 of 10.10.10.1.
 
-> If you'd like to keep your Android device on the local Wi-Fi, you must
-  determine the IP address of your Esquilo's Wi-Fi interface and update the
-  NetIO Remote LCD user config to use that address. This can be done in the
-  "Global" tab in the NetIO UI Designer app, by changing the Connections->hostname
-  field. For such changes to make it to your Android device, you need to save them
-  with "Save Online" from UI Designer and download them with "SYNC" from the
-  mobile app account dialog.
+> If you'd like to keep your Android device on the local Wi-Fi, determine the IP
+  address of your Esquilo's Wi-Fi interface and update the NetIO Remote LCD user
+  config to use that address. This can be done in the "Global" tab in the NetIO
+  UI Designer app, by changing the Connections->hostname field. For such changes
+  to make it to your Android device, you need to save them with "Save Online"
+  from UI Designer and download them with "SYNC" from the mobile app account
+  dialog.
 
 ### Run the Squirrel Code
 
