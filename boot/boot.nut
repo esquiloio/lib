@@ -43,3 +43,30 @@ while (true)
     delay(500);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Run an Arduino-style application
+///////////////////////////////////////////////////////////////////////////////
+
+/*
+// Set the LED pin number
+ledPin <- LED_BUILTIN;
+
+// Configure the LED as an output
+function setup()
+{
+    pinMode(ledPin, OUTPUT);
+}
+
+// Loop blinking the LED every half second
+function loop()
+{
+    digitalWrite(ledPin, HIGH);
+    delay(500);
+    digitalWrite(ledPin, LOW);
+    delay(500);
+}
+
+// Run the Arduino loop
+run();
+*/
+
