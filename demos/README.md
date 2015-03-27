@@ -1,17 +1,15 @@
 # Esquilo Demos
 
-These are some ready-to-run demo projects for the Esquilo.
+This directory contains ready-to-run demo projects for the Esquilo.
 
-The easiest way to install the demos is to download this repository to a micro-SD card and insert the card in your Esquilo. See [Esquilo Library](../README.md) for instructions.
+## Installation
 
-## Demo Instructions
+See the [Esquilo library readme](../README.md) for installation instructions.
 
-After installation, please see the README.md file in each demo folder for instruction on their use.
+## Running Demos
 
-## License
-
-This work is released under the Creative Commons Zero (CC0) license.
-See http://creativecommons.org/publicdomain/zero/1.0/
+After installation, see the README.md file in each demo directory for a
+description and how to run them.
 
 
 
