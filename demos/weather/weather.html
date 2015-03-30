@@ -14,24 +14,27 @@ See http://creativecommons.org/publicdomain/zero/1.0/
   <link rel="stylesheet" href="weather.css" type="text/css" />
   <script type="text/javascript" src="/js/erpc.js"></script>
   <script>
-    function readSensors() {
-      erpc("readHumidity", null, function(result) {
-        document.getElementById("humidity").innerHTML =
-          result.toFixed(1) + " %";
-      });
-      erpc("readTemp", null, function(result) {
+    function getWeather() {
+      erpc("getWeather", null, function(result) {
+      	document.getElementById("humidity").innerHTML =
+          result.humidity.toFixed(1) + " %";
+          
         // Convert Celsius to Fahrenheit
         document.getElementById("temp").innerHTML =
-          (result * 1.9 + 32).toFixed(1) + " &deg;F";
-      });
-      erpc("readPressure", null, function(result) {
+          (result.temp * 1.9 + 32).toFixed(1) + " &deg;F";
+          
         // Convert to inHg
         document.getElementById("pressure").innerHTML =
-          (result * 0.000295299830714).toFixed(2) + " in";
+          (result.pressure * 0.000295299830714).toFixed(2) + " in";
+          
+	  	setTimeout(getWeather, 1000);
+      },
+      function(text) {
+        console.log("error: " + text);
+	  	setTimeout(getWeather, 1000);
       });
     }
-    readSensors();
-    setInterval(readSensors, 1000);
+    getWeather();
   </script>
 </head>
 <body>

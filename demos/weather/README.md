@@ -34,7 +34,7 @@ from it's local IP address:
 
 or from the Esquilo Nest:
 
-    http://esquilo.io/nest/<Esquilo System ID>/sd/lib/demos/weather/weather.html
+    http://<Esquilo System ID>.esquilo.io/sd/lib/demos/weather/weather.html
 
 License
 -------

@@ -31,7 +31,7 @@ from it's local IP address:
 
 or from the Esquilo Nest:
 
-    http://esquilo.io/nest/<Esquilo System ID>/sd/lib/demos/sprinkler/sprinkler.html
+    http://<Esquilo System ID>.esquilo.io/sd/lib/demos/sprinkler/sprinkler.html
 
 License
 -------

@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Microchip MCP9808 temperature sensor class
+// Measurement Specialties HTU21D humidity sensor class
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 /////////////////////////////////////////////////////////////////////////////
-class MCP9808
+class HTU21D
 {
     constructor(_i2c, _addr)
     {
@@ -22,23 +22,25 @@ class MCP9808
 // Arguments:   None
 // Return:      Floating point temperature in Celsius
 /////////////////////////////////////////////////////////////////////////////
-function MCP9808::readTemp()
+function HTU21D::readTemp()
 {
     i2c.address(addr);
-    local data = i2c.read16(0x5) & 0x1fff;
-    if (data & 0x1000)
-        data -= 0x2000;
-
-    return data / 16.0;
+    local temp = i2c.read24(0xe3) >> 8;
+    temp = -46.85 + 175.75 * temp / 65536.0;
+    
+    return temp;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Function:    revision
-// Description: Get the device revision number
+// Function:    readHumidity
+// Description: Read the humidity from the sensor
 // Arguments:   None
-// Return:      Integer revision number
+// Return:      Floating point humidity in percentage
 /////////////////////////////////////////////////////////////////////////////
-function MCP9808::revision()
-{
-  	return i2c.read16(0x0);
+function HTU21D::readHumidity() {
+    i2c.address(addr);
+    local humidity = i2c.read24(0xe5) >> 8;
+    humidity = -6.0 + 125.0 * humidity / 65536.0;
+    
+    return humidity;
 }

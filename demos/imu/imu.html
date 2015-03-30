@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--
+IMU Demo
+
+See readme.txt for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>IMU Demo</title>
+	<link href="imu.css" rel="stylesheet" type="text/css">
+	<script language="javascript" type="text/javascript" src="../../libs/jquery/jquery.min.js"></script>
+	<script language="javascript" type="text/javascript" src="../../libs/flot/jquery.flot.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/js/erpc.js"></script>
+	<script type="text/javascript">
+
+	$(function() {
+		var data = {
+            x: { accel: [], mag: [], gyro: [] },
+            y: { accel: [], mag: [], gyro: [] },
+            z: { accel: [], mag: [], gyro: [] }
+        };
+        
+        // Number of data points to plot
+        var points = 300;
+        
+        // Zero the x,y,z data
+        function initData(data)
+        {
+            for (var i = 0; i < points; i++) {
+                data.accel[i] = [ i, 0 ];
+                data.mag[i] = [ i, 0 ];
+                data.gyro[i] = [ i, 0 ];
+            }
+        }
+        
+        initData(data.x);
+        initData(data.y);
+        initData(data.z);
+        
+        // Create the plots
+        function createPlot(id, data)
+        {
+            return $.plot(id,
+                [
+                	{ label:"accel", data:data.accel },
+                	{ label:"mag", data:data.mag },
+                	{ label:"gyro", data:data.gyro }
+                ],
+                {
+                series: {
+                    shadowSize: 0
+                },
+                yaxis: {
+                    show: false,
+                    min: -1,
+                    max: 1
+                },
+                xaxis: {
+                    show: false
+                },
+                legend: { position: "sw" }
+            });
+        }
+            
+		var xplot = createPlot("#xplaceholder", data.x);
+		var yplot = createPlot("#yplaceholder", data.y);
+		var zplot = createPlot("#zplaceholder", data.z);
+        
+        // Update a plot with new data
+		function updateData(data, plot, accel, mag, gyro)
+        {
+            // Shift all points
+            for (var i = 0; i < points - 1; i++) {
+                data.accel[i][1] = data.accel[i + 1][1];
+                data.mag[i][1] = data.mag[i + 1][1];
+                data.gyro[i][1] = data.gyro[i + 1][1];
+            }
+
+            // Plot normalized values
+            data.accel[points - 1][1] = accel / 4.0 * 2.0;
+            data.mag[points - 1][1] = mag  / 32768.0 * 32.0;
+            data.gyro[points - 1][1] = gyro / 35.744343 * 2.0;
+            
+            plot.setData([ data.accel, data.mag, data.gyro ]);
+            plot.draw();
+        }
+        
+        // Call ERPC on Esquilo to get current IMU data
+		function update() {
+            erpc("readIMU", null, function(result) {
+                // Update the plots
+                updateData(data.x, xplot, result.accel.x, result.mag.x, result.gyro.x);
+                updateData(data.y, yplot, result.accel.y, result.mag.y, result.gyro.y);
+                updateData(data.z, zplot, result.accel.z, result.mag.z, result.gyro.z);
+                
+                // Update the Euler angles
+                $("#roll span").html(Math.round(result.euler.roll * 180 / Math.PI));
+                $("#pitch span").html(Math.round(result.euler.pitch * 180 / Math.PI));
+                $("#yaw span").html(Math.round(result.euler.yaw * 180 / Math.PI));
+                
+                // Call update again after timeout
+                setTimeout(update, 50);
+      		},
+            function(text) {
+                log.console("error: " + text);
+                setTimeout(update, 50); 
+            });
+		}
+
+       	$('#calibrate').click(function() {
+            erpc("calibrateIMU", 100);
+        });
+            
+		update();
+	});
+	</script>
+</head>
+<body>
+	<div id="header">
+		<h2 id="title">IMU Demo</h2>
+        <div class="button"><button id="calibrate" type="button">Calibrate</button></div>
+	</div>
+  	<div id="ahrs">
+        <div class="angle", id="roll"><h3>Roll: <span>0</span>&deg;</h3></div>
+        <div class="angle", id="pitch"><h3>Pitch: <span>0</span>&deg;</h3></div>
+        <div class="angle", id="yaw"><h3>Yaw: <span>0</span>&deg;</h3></div>
+	</div>
+	<div id="content">
+        <div class="axis">
+            <div class="label">X</div>
+            <div class="container">
+                <div id="xplaceholder" class="placeholder"></div>
+            </div>
+        </div>
+        <div class="axis">
+            <div class="label">Y</div>
+            <div class="container">
+                <div id="yplaceholder" class="placeholder"></div>
+            </div>
+        </div>
+        <div class="axis">
+            <div class="label">Z</div>
+            <div class="container">
+                <div id="zplaceholder" class="placeholder"></div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>
