@@ -28,13 +28,6 @@ h3 { font-size: 36px; }
     vertical-align: middle;
 }
 
-#calibrate {
-    float: right;
-    font-size: 30px;
-    padding: 5px;
-    margin: 10px;
-}
-
 #ahrs {
 	position: relative;
 	width: 900px;

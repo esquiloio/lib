@@ -4,10 +4,9 @@
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
-
-dofile("sd:/sensors/fxos8700/fxos8700.nut");
+dofile("sd:/sensors/FXOS8700/fxos8700.nut");
 dofile("sd:/sensors/fxas21002/fxas21002.nut");
-dofile("sd:/algorithms/madgwickahrs/madgwickahrs.nut");
+dofile("sd:/algorithms/madgwickahrs/MadgwickAHRS.nut");
 
 // Use I2C0 at 400khz
 i2c <- I2C(0);
@@ -18,8 +17,8 @@ fxos8700 <- FXOS8700(i2c, 0x1e);
 fxas21002 <- FXAS21002(i2c, 0x20);
 
 // Madgwick AHRS filter
-ahrs <- MadgwickAHRS(25);
-//ahrs.setBeta(0.1);
+ahrs <- MadgwickAHRS(50);
+ahrs.setBeta(0.2);
 
 // Global sensor data
 accel <- {};
@@ -33,63 +32,9 @@ function readIMU()
         accel = accel,
         mag = mag,
         gyro = gyro,
+        quaternion = ahrs.getQuaternion(),
         euler = ahrs.getEuler()
     };
-}
-
-// Calibrate the IMU
-function calibrateIMU(samples)
-{
-    local acount = 0;
-    local gcount = 0;
-    
-    // Clear all samples from the FIFOs
-    while (fxos8700.accel_count() > 0)
-        fxos8700.accel_readblob();
-
-    while (fxas21002.count() > 0)
-        fxas21002.readblob();
-    
-    // Zero calibration values
-    cal_accel.x = 0;
-    cal_accel.y = 0;
-    cal_accel.z = 0;
-
-    cal_gyro.x = 0;
-    cal_gyro.y = 0;
-    cal_gyro.z = 0;
-
-    // Accumulate the samples request
-    while (acount < samples || gcount < samples) {
-        while (acount < samples && fxos8700.accel_count() > 0) {
-            local accel = fxos8700.accel_read();
-            cal_accel.x += accel.x;
-            cal_accel.y += accel.y;
-            cal_accel.z += accel.z;
-            acount++;
-        }
-
-        while (gcount < samples && fxas21002.count() > 0) {
-            local gyro = fxas21002.read();
-            cal_gyro.x += gyro.x;
-            cal_gyro.y += gyro.y;
-            cal_gyro.z += gyro.z;
-            gcount++;
-        }
-
-        delay(5);
-    }
-    
-    // Calculate the offset from the mean
-    cal_accel.x = -cal_accel.x / samples;
-    cal_accel.y = -cal_accel.y / samples;
-    cal_accel.z = -cal_accel.z / samples + 1;
-    
-    cal_gyro.x = -cal_gyro.x / samples;
-    cal_gyro.y = -cal_gyro.y / samples;
-    cal_gyro.z = -cal_gyro.z / samples;
-    
-    nvsave();
 }
 
 // Run the main IMU loop
@@ -110,15 +55,21 @@ function runIMU()
             mag = fxos8700.mag_read();
             gyro = fxas21002.read();
 
-            // Add the calibration values
+            // Apply accelerometer zero offset calibration
             accel.x += cal_accel.x;
             accel.y += cal_accel.y;
             accel.z += cal_accel.z;
 
+            // Apply gyron zero offset calibration
             gyro.x += cal_gyro.x;
             gyro.y += cal_gyro.y;
             gyro.z += cal_gyro.z;
-
+            
+            // Apply magnetometer soft-iron calibration
+           	mag.x = mag.x*cal_mag.x[0] + mag.y*cal_mag.x[1] + mag.z*cal_mag.x[2];
+           	mag.y = mag.x*cal_mag.y[0] + mag.y*cal_mag.y[1] + mag.z*cal_mag.y[2];
+           	mag.z = mag.x*cal_mag.z[0] + mag.y*cal_mag.z[1] + mag.z*cal_mag.z[2];
+                    
             // Update the AHRS filter
             ahrs.update(gyro.x, gyro.y, gyro.z,
                         accel.x,  accel.y, accel.z,
@@ -144,16 +95,31 @@ function runIMU()
 if (!("imu" in nv)) {
     nv.imu <- {
         accel={x=0, y=0, z=0},
-        gyro={x=0, y=0, z=0}
+        gyro={x=0, y=0, z=0},
+        mag={
+            x=[1, 0, 0],
+            y=[0, 1, 0],
+            z=[0, 0, 1]
+        }
     };
 }
 
 // Add global references to calibration values
 cal_accel <- nv.imu.accel;
 cal_gyro <- nv.imu.gyro;
+cal_mag <- nv.imu.mag;
 
-print(format("calibration gyro %f %f %f accel %f %f %f\n",
-             cal_gyro.x, cal_gyro.y, cal_gyro.z,
+print("Calibration:\n");
+print(format("gyro %f %f %f\n",
+             cal_gyro.x, cal_gyro.y, cal_gyro.z));
+print(format("accel %f %f %f\n",
              cal_accel.x, cal_accel.y, cal_accel.z));
+print("mag\n");
+print(format("[%f %f %f]\n",
+             cal_mag.x[0], cal_mag.x[1], cal_mag.x[2]));
+print(format("[%f %f %f]\n",
+             cal_mag.y[0], cal_mag.y[1], cal_mag.y[2]));
+print(format("[%f %f %f]\n",
+             cal_mag.z[0], cal_mag.z[1], cal_mag.z[2]));
 
 runIMU();

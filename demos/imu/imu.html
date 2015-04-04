@@ -111,10 +111,6 @@ See http://creativecommons.org/publicdomain/zero/1.0/
             });
 		}
 
-       	$('#calibrate').click(function() {
-            erpc("calibrateIMU", 100);
-        });
-            
 		update();
 	});
 	</script>
@@ -122,7 +118,6 @@ See http://creativecommons.org/publicdomain/zero/1.0/
 <body>
 	<div id="header">
 		<h2 id="title">IMU Demo</h2>
-        <div class="button"><button id="calibrate" type="button">Calibrate</button></div>
 	</div>
   	<div id="ahrs">
         <div class="angle", id="roll"><h3>Roll: <span>0</span>&deg;</h3></div>
