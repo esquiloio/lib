@@ -6,6 +6,10 @@ squirrel Timer class to run asynchronous timers in the background to control
 the sprinkler zones.  The web interface is used to both configure the
 schedule for the zones and to immediately control their operation.
 
+The demo uses a Seeed Studio relay shield to control the sprinkler zones.
+
+[SLD01101P](http://www.seeedstudio.com/depot/relay-shield-v20-p-1376.html?cPath=132_134)
+
 The demo consists of four files:
 
   * sprinkler.nut - Squirrel nut that contains the squirrel code that runs
