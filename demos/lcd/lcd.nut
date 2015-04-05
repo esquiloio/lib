@@ -1,6 +1,6 @@
 // Remote LCD Demo
 //
-// See readme.txt for more information.
+// See README.md for more information.
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
@@ -31,7 +31,7 @@ class Lcd
     {
         // Configure UART for 8 bits, no parity, 1 stop bit, 9600 bps
         uart = _uart;
-        uart.mode(UART.MODE_8N1);
+        uart.mode(UART_MODE_8N1);
         uart.speed(9600);
         
         pwm = _pwm;
@@ -63,8 +63,8 @@ class Lcd
     function on()
     {
         _isOn = true;
-        uart.puts(LCD_CMD.tochar());
-        uart.puts(LCD_ON.tochar());
+        uart.writestr(LCD_CMD.tochar());
+        uart.writestr(LCD_ON.tochar());
         _backlightOn();
         delay(1);
     }
@@ -74,8 +74,8 @@ class Lcd
     function off()
     {
         _isOn = false;
-        uart.puts(LCD_CMD.tochar());
-        uart.puts(LCD_OFF.tochar());
+        uart.writestr(LCD_CMD.tochar());
+        uart.writestr(LCD_OFF.tochar());
         _backlightOff();
         delay(1);
     }
@@ -94,8 +94,8 @@ class Lcd
     {
         row = 0;
         column = 0;
-        uart.puts(LCD_CMD.tochar());
-        uart.puts(LCD_CLEAR.tochar());
+        uart.writestr(LCD_CMD.tochar());
+        uart.writestr(LCD_CLEAR.tochar());
         delay(10);
     }
 
@@ -119,9 +119,9 @@ class Lcd
             return;
         }
         column = position & 0x0f;
-        uart.puts(LCD_CMD.tochar());
-        uart.puts(LCD_CURSOR.tochar());
-        uart.puts(position.tochar());
+        uart.writestr(LCD_CMD.tochar());
+        uart.writestr(LCD_CURSOR.tochar());
+        uart.writestr(position.tochar());
         delay(1);
     }
 
@@ -130,9 +130,9 @@ class Lcd
     // Arguments:   level - The contrast level to set the display to (0 - 50)
     function setContrast(level)
     {
-        uart.puts(LCD_CMD.tochar());
-        uart.puts(LCD_CONTRAST.tochar());
-        uart.puts(level.tochar());
+        uart.writestr(LCD_CMD.tochar());
+        uart.writestr(LCD_CONTRAST.tochar());
+        uart.writestr(level.tochar());
         delay(1);
     }
 
@@ -150,7 +150,7 @@ class Lcd
                 row = 1;
                 column = 0;
             }
-            uart.puts(c);
+            uart.writestr(c);
             column++;
         }
     }
