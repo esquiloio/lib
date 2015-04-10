@@ -75,6 +75,13 @@ of 10.10.10.1.
 
 ### Run the Squirrel Code
 
+The following Squirrel libraries are required by the demo. Ensure they are
+enabled in the System menu before running lcd.nut.
+
+  * system
+  * I2C
+  * GPIO
+
 Bring up the Web IDE from your Esquilo, and run the "lcd.nut" file. Even
 though the nut runs and exits, the LCD control functions are still loaded in the
 Squirrel VM and can be called from the NetIO mobile app.

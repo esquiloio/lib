@@ -20,12 +20,24 @@ sensors are included on the Freescale FRDM-STBC-AGM01 Arduino shield board.
 
 [FRDM-STBC-AGM01](http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=FRDM-STBC-AGM01)
 
+The IMU board has a jumper block to select which I2C it is connected to. This
+demo uses I2C0, so ensure J6 and J7 are both strapped to pins 1-2.
+
 The demo consists of four files:
 
   * imu.nut - Squirrel nut that contains the squirrel code that continuously
     reads the sensors and calculates the orientation.
   * imu.html - Contains the HTML for the web interface.
   * imu.css - Cascading style sheet for the web interface.
+
+The following Squirrel libraries are required by the demo. Ensure they are
+enabled in the System menu before running imu.nut.
+
+  * system
+  * string
+  * math
+  * I2C
+  * nv
 
 You must run the imu.nut squirrel nut on your Esquilo prior to opening
 the web interface from your browser.  To run this nut when Esquilo boots,

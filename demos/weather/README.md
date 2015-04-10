@@ -19,6 +19,15 @@ The demo consists of three files:
   * weather.html - Contains the HTML and JavaScript for the web interface.
   * weather.css - Cascading style sheet for the web interface.
 
+The following Squirrel libraries are required by the demo. Ensure they are
+enabled in the System menu before running weather.nut.
+
+  * system
+  * string
+  * GPIO
+  * nv
+  * Timer
+
 You must run the weather.nut squirrel nut on your Esquilo prior to opening
 the web interface from your browser.  Even though the nut runs and exits,
 the functions are still loaded in the squirrel VM and can be called from the

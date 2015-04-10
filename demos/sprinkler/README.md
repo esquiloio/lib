@@ -20,6 +20,14 @@ The demo consists of four files:
     and to send ERPC requests to the Esquilo.
   * sprinkler.css - Cascading style sheet for the web interface.
 
+The following Squirrel libraries are required by the demo. Ensure they are
+enabled in the System menu before running sprinkler.nut.
+
+  * system
+  * GPIO
+  * nv
+  * Timer
+
 You must run the sprinkler.nut squirrel nut on your Esquilo prior to opening
 the web interface from your browser.  Even though the nut runs and exits,
 the functions are still loaded in the squirrel VM and can be called from the
