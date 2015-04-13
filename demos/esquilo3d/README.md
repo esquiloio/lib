@@ -1,6 +1,6 @@
 Esquilo 3D Demo
 ===============
-This demo expands on the [IMU demo](../imu/README.md) with a 3D Esquilo logo
+This demo expands on the [IMU demo](../imu/) with a 3D Esquilo logo
 that is controlled with movements of an Esquilo board. The logo responds in
 real-time to rotations you give the board in all three dimensions, using WebGL.
 
