@@ -1,8 +1,10 @@
 Esquilo 3D Demo
 ===============
-This demo expands on the [IMU demo](../imu/) with a 3D Esquilo logo
-that is controlled with movements of an Esquilo board. The logo responds in
-real-time to rotations you give the board in all three dimensions, using WebGL.
+The Esquilo 3D demo shows a three dimensional Esquilo logo that moves in real
+time to match the orientation of the Esquilo board.  The demo uses the exact
+same Squirrel nut and sensors as the [IMU demo](../imu/).  The logo is rendered
+on the browser using [WebGL](http://en.wikipedia.org/wiki/WebGL) and the
+[three.js JavaScript 3D library](http://threejs.org/).
 
 The demo consists of two files:
 
