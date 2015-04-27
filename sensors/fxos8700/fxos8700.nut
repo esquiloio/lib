@@ -50,7 +50,7 @@ function FXOS8700::constructor(_i2c, _addr)
     // [7]: m_acal=1: auto calibration enabled
     // [6]: m_rst=0: no one-shot magnetic reset
     // [5]: m_ost=0: no one-shot magnetic measurement
-    // [4-2]: m_os=111=7: 32x oversampling (for 25Hz) to reduce magnetometer noise
+    // [4-2]: m_os=111=7: 16x oversampling (for 50Hz) to reduce magnetometer noise
     // [1-0]: m_hms=11=3: select hybrid mode with accel and magnetometer active
     i2c.write8(FXOS8700CQ_M_CTRL_REG1, 0x9f);
 
@@ -77,7 +77,7 @@ function FXOS8700::constructor(_i2c, _addr)
 	    
     // write 0001 1101 = 0x25 to accelerometer control register 1
     // [7-6]: aslp_rate=00
-    // [5-3]: dr=011 for 50Hz data rate (when in hybrid mode)
+    // [5-3]: dr=011 for 100Hz data rate (50Hz in hybrid mode)
     // [2]: lnoise=1 for low noise mode
     // [1]: f_read=0 for normal 16 bit reads
     // [0]: active=1 to take the part out of standby and enable sampling
