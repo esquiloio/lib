@@ -1,0 +1,82 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
+* {
+    padding: 0; margin: 0; vertical-align: top;
+}
+
+body {
+	font-family: "Roboto",sans-serif;
+}
+
+h1 { font-size: 38px; }
+h2 { font-size: 24px; }
+h3 { font-size: 18px; }
+
+#header {
+	position: relative;
+	width: 900px;
+	margin: auto;
+}
+
+#header h2 {
+	margin-left: 10px;
+	vertical-align: middle;
+}
+
+#content {
+	width: 880px;
+	margin: 0 auto;
+	padding: 10px;
+}
+
+.flot-tick-label, .axisLabels{
+	font-size: 18px;
+    font-weight: bold;
+    font-family: "Roboto Bold",sans-serif;
+    color: #444;
+}
+
+.container {
+	box-sizing: border-box;
+	width: 850px;
+	height: 400px;
+	padding: 20px 15px 15px 15px;
+	margin: 15px auto 30px auto;
+	border: 1px solid #ddd;
+	background: #fff;
+	background: linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.placeholder {
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	line-height: 1.2em;
+}
+
+.button {
+    float: left;
+    width: 250px;
+    text-align: center;
+	border: 1px solid #ddd;
+    margin: 15px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.button.select {
+    background-color: #ddd;
+}
+
+.buttonrow {
+    height: 60px;
+}

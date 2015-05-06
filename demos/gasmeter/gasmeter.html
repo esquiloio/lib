@@ -1,0 +1,62 @@
+<h1>Gas Meter Demo</h1>
+
+<p>The gas meter demo shows you how to create a smart WiFi gas meter that you
+can use to graph your natural gas or propane usage as well as monitoring
+your bill and greenhouse gas emissions.</p>
+
+<p>The demo requires the input of a single TTL pulse signal from a gas meter
+that indicates a unit of usage, typically at 1.0 cubic feet per pulse.  If
+your gas company owns your meter, then you probably won't have access to a
+pulse signal but you may be able to purchase and install a second gas meter
+after the gas company's meter to get a pulse signal.  Here is an example of
+a pulse output gas meter:</p>
+
+<p><a href="http://www.amazon.com/Pulse-Output-Gas-Meter/dp/B00998ULE4">Pulse Output Gas Meter</a></p>
+
+<p><strong>WARNING!!!!</strong>
+Natural gas and propane are highly flammable and very dangerous.  Misuse can
+cause property damage, injury, or death.  Do not try to install a gas meter
+if you do not know exactly what you are doing.  Consult a gas professional
+or ask your gas company if in doubt.</p>
+
+<p>The demo consists of four files:</p>
+
+<ul>
+<li>gasmeter.nut - Squirrel nut that contains the squirrel code that monitors
+the pulse input from the meter and accumulates the counts.</li>
+<li>gasmeter.html - Contains the HTML for the web interface using FLOT to
+display a nice graph of the gas meter data.</li>
+<li>gasmeter.css - Cascading style sheet for the web interface.</li>
+</ul>
+
+<p>The following Squirrel libraries are required by the demo. Ensure they are
+enabled in the System menu before running gasmeter.nut.</p>
+
+<ul>
+<li>system</li>
+<li>GPIO</li>
+<li>nv</li>
+</ul>
+
+<p>You must run the gasmeter.nut squirrel nut on your Esquilo prior to opening
+the web interface from your browser.  To run this nut when Esquilo boots,
+you can load it from your boot.nut with the dofile command.  i.e.</p>
+
+<pre><code>dofile("sd:/lib/demos/gasmeter/gasmeter.nut");
+</code></pre>
+
+<p>After the squirrel nut is running, open the html file from your browser either
+from it's local IP address:</p>
+
+<pre><code>http://&lt;Local Esquilo IP&gt;/sd/lib/demos/gasmeter/gasmeter.html
+</code></pre>
+
+<p>or from the Esquilo Nest:</p>
+
+<pre><code>http://&lt;Esquilo System ID&gt;.esquilo.io/sd/lib/demos/gasmeter/gasmeter.html
+</code></pre>
+
+<h2>License</h2>
+
+<p>This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/</p>
