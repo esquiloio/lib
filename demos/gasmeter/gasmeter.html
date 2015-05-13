@@ -1,62 +1,166 @@
-<h1>Gas Meter Demo</h1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--
+Gas Meter Demo
+See readme.txt for more information.
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Gas Meter</title>
+        <link href="gasmeter.css" rel="stylesheet" type="text/css">
+        <script language="javascript" type="text/javascript" src="../libs/jquery/jquery.min.js"></script>
+        <script language="javascript" type="text/javascript" src="../libs/flot/jquery.flot.min.js"></script>
+        <script language="javascript" type="text/javascript" src="../libs/flot/jquery.flot.time.min.js"></script>
+        <script language="javascript" type="text/javascript" src="../libs/flot/jquery.flot.axislabels.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/erpc.js"></script>
+        <script type="text/javascript">
 
-<p>The gas meter demo shows you how to create a smart WiFi gas meter that you
-can use to graph your natural gas or propane usage as well as monitoring
-your bill and greenhouse gas emissions.</p>
+        $(function() {
+        var USAGE_UNITS = 1.0; // 1.0 CCF per pulse meter
+        var COST_UNITS = USAGE_UNITS * 1.05 / 100.0; // $1.05 per CCF
+        var CO2_UNITS = USAGE_UNITS * 11.99 / 2000; // 11.99 pounds CO2 per CCF (EIA)
+        var multiplier = USAGE_UNITS;
+        var ylabel = 'CCF';
+        var units = 'usage';
+        var time = 'monthly';
+        var TZ = (new Date()).getTimezoneOffset();
 
-<p>The demo requires the input of a single TTL pulse signal from a gas meter
-that indicates a unit of usage, typically at 1.0 cubic feet per pulse.  If
-your gas company owns your meter, then you probably won't have access to a
-pulse signal but you may be able to purchase and install a second gas meter
-after the gas company's meter to get a pulse signal.  Here is an example of
-a pulse output gas meter:</p>
+        function monthSeries(data) {
+            var series = [];
+                        var year = Math.floor(data[0] / 12) + 1970;
+            var month = data[0] % 12;
+            for (var i = 1; i < data.length; i++) {
+                var date = new Date(year, month);
+                series.push([date, data[i] * multiplier]);
+                if (--month < 0) {
+                    month += 12;
+                    year--;
+                }
+            }
+            return series;
+        }
+        
+        function epochSeries(data, span) {
+            var series = [];
+                        var start = data[0] * span - (TZ * 60);
+            
+            for (var i = 1; i < data.length; i++) {
+                var date = new Date(start * 1000.0);
+                series.push([date, data[i] * multiplier]);
+                start -= span;
+            }
+            return series;
+        }
 
-<p><a href="http://www.amazon.com/Pulse-Output-Gas-Meter/dp/B00998ULE4">Pulse Output Gas Meter</a></p>
+        function createPlot(series, span) {
+            // Create the plot
+            var plot = $.plot("#placeholder",
+                [{
+                    data: series,
+                    bars: {
+                        show: true, 
+                        barWidth: 6 * span * 100,
+                        fill: true,
+                        lineWidth: 1,
+                        align: "center",
+                        fillColor: "#039deb"
+                    },
+                    color: "#039deb"
+                }],
+                {
+                    axisLabels: { show: true },
+                    xaxis: {
+                        mode: "time"
+                    },
+                    yaxis: {
+                        axisLabel: ylabel
+                    }
+                }
+            );
+        }
+        
+        // Call ERPC on Esquilo to get current gas data
+        function updatePlot() {
+            erpc("getData", null, function(result) {
+                // Update the plot
+                if (time == 'monthly') {
+                    var span = 3600 * 24 * 31;
+                    createPlot(monthSeries(result.monthly), span);
+                }
+                else if (time == 'daily') {
+                    var span = 3600 * 24;
+                        createPlot(epochSeries(result.daily, span), span);
+                }
+                else {
+                    var span = 3600;
+                    createPlot(epochSeries(result.hourly, span), span);
+                }
+            },
+            function(text) {
+                console.log("error: " + text);
+            });
+        }
 
-<p><strong>WARNING!!!!</strong>
-Natural gas and propane are highly flammable and very dangerous.  Misuse can
-cause property damage, injury, or death.  Do not try to install a gas meter
-if you do not know exactly what you are doing.  Consult a gas professional
-or ask your gas company if in doubt.</p>
-
-<p>The demo consists of four files:</p>
-
-<ul>
-<li>gasmeter.nut - Squirrel nut that contains the squirrel code that monitors
-the pulse input from the meter and accumulates the counts.</li>
-<li>gasmeter.html - Contains the HTML for the web interface using FLOT to
-display a nice graph of the gas meter data.</li>
-<li>gasmeter.css - Cascading style sheet for the web interface.</li>
-</ul>
-
-<p>The following Squirrel libraries are required by the demo. Ensure they are
-enabled in the System menu before running gasmeter.nut.</p>
-
-<ul>
-<li>system</li>
-<li>GPIO</li>
-<li>nv</li>
-</ul>
-
-<p>You must run the gasmeter.nut squirrel nut on your Esquilo prior to opening
-the web interface from your browser.  To run this nut when Esquilo boots,
-you can load it from your boot.nut with the dofile command.  i.e.</p>
-
-<pre><code>dofile("sd:/lib/demos/gasmeter/gasmeter.nut");
-</code></pre>
-
-<p>After the squirrel nut is running, open the html file from your browser either
-from it's local IP address:</p>
-
-<pre><code>http://&lt;Local Esquilo IP&gt;/sd/lib/demos/gasmeter/gasmeter.html
-</code></pre>
-
-<p>or from the Esquilo Nest:</p>
-
-<pre><code>http://&lt;Esquilo System ID&gt;.esquilo.io/sd/lib/demos/gasmeter/gasmeter.html
-</code></pre>
-
-<h2>License</h2>
-
-<p>This work is released under the Creative Commons Zero (CC0) license.
-See http://creativecommons.org/publicdomain/zero/1.0/</p>
+        function setTime(value) {
+            time = value;
+            $('.time').removeClass('select');
+            $('#' + value).addClass('select');
+            updatePlot();
+        }
+        
+        function setUnits(value) {
+            units = value;
+            $('.units').removeClass('select');
+            $('#' + value).addClass('select');
+            if (value == 'usage') {
+                multiplier = USAGE_UNITS;
+                ylabel = 'CCF';
+            }
+            else if (value == 'co2') {
+                multiplier = CO2_UNITS;
+                ylabel = 'Tons CO2';
+            }
+            else {
+                multiplier = COST_UNITS;
+                ylabel = "Dollars";
+            }
+            updatePlot();
+        }
+        
+        $('#usage').click(function() {setUnits('usage');});
+        $('#cost').click(function() {setUnits('cost');});
+        $('#co2').click(function() {setUnits('co2');});
+        
+        $('#monthly').click(function() {setTime('monthly');});
+        $('#daily').click(function() {setTime('daily');});
+        $('#hourly').click(function() {setTime('hourly')});
+        
+        $('#' + time).addClass('select');
+        $('#' + units).addClass('select');
+        updatePlot();
+        });
+    </script>
+</head>
+<body>
+        <div id="header">
+                <h1>Gas Meter</h1>
+        </div>
+        <div id="content">
+        <div class="buttonrow">
+            <div id="usage" class="units button"><h2>Usage</h2></div>
+            <div id="cost" class="units button"><h2>Cost</h2></div>
+            <div id="co2" class="units button"><h2>CO2 Emissions</h2></div>
+        </div>
+        <div class="container">
+            <div id="placeholder" class="placeholder"></div>
+        </div>
+        <div class="buttonrow">
+            <div id="monthly" class="time button"><h2>Monthly</h2></div>
+            <div id="daily" class="time button"><h2>Daily</h2></div>
+            <div id="hourly" class="time button"><h2>Hourly</h2></div>
+        </div>
+        </div>
+</body>
+</html>
