@@ -4,8 +4,8 @@
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
-dofile("sd:/sensors/FXOS8700/fxos8700.nut");
-dofile("sd:/sensors/fxas21002/fxas21002.nut");
+dofile("sd:/lib/sensors/FXOS8700/fxos8700.nut");
+dofile("sd:/lib/sensors/fxas21002/fxas21002.nut");
 
 // Use I2C0 at 400khz
 i2c <- I2C(0);
