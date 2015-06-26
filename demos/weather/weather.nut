@@ -5,8 +5,8 @@
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 
-dofile("sd:/sensors/mpl3115a2/mpl3115a2.nut");
-dofile("sd:/sensors/htu21d/htu21d.nut");
+dofile("sd:/lib/sensors/mpl3115a2/mpl3115a2.nut");
+dofile("sd:/lib/sensors/htu21d/htu21d.nut");
 
 // ERPC function to get the weather data
 function getWeather()
