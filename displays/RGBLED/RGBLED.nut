@@ -1,0 +1,114 @@
+/////////////////////////////////////////////////////////////////////////////
+// RGB LED
+//
+// This work is released under the Creative Commons Zero (CC0) license.
+// See http://creativecommons.org/publicdomain/zero/1.0/
+/////////////////////////////////////////////////////////////////////////////
+//
+// Example usage:
+//
+// /* Pins 2, 3, and 4 (PWM0 channels 0, 1, and 2)*/
+// led = RGBLED(PWM(0), 0, 1, 2);
+// led.on()
+// led.color(0x039deb);
+//
+
+class RGBLED
+{
+    pwm = null;
+    chRed = 0;
+    chGreen = 0;
+    chBlue = 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    Class Constructor
+// Description: Create
+// Arguments:   _pwm - PWM object to drive the LED with
+//              _chRed - PWM channel number for red
+//              _chGreen - PWM channel number for green
+//              _chBlue - PWM channel number for blue
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::constructor(_pwm, _chRed, _chGreen, _chBlue)
+{
+    pwm = _pwm;
+    chRed = _chRed;
+    chGreen = _chGreen;
+    chBlue = _chBlue;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    on
+// Description: Turn the RGB LED on
+// Arguments:	None
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::on()
+{
+    pwm.on(chRed);
+    pwm.on(chGreen);
+    pwm.on(chBlue);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    off
+// Description: Turn the RGB LED off
+// Arguments:	None
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::off()
+{
+    pwm.off(chRed);
+    pwm.off(chGreen);
+    pwm.off(chBlue);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    color
+// Description: Set the RGB LED color from a hexadecimal RGB value
+// Arguments:	value - RGB value from 0x000000 to 0xffffff
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::color(value)
+{
+    red((value >> 16) & 0xff);
+    green((value >> 8) & 0xff);
+    blue((value >> 0) & 0xff);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    red
+// Description: Set the RGB LED red color component
+// Arguments:	value - 0 to 255
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::red(value)
+{
+    setChannel(chRed, value);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    green
+// Description: Set the RGB LED green color component
+// Arguments:	value - 0 to 255
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::green(value)
+{
+    setChannel(chGreen, value);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    blue
+// Description: Set the RGB LED blue color component
+// Arguments:	value - 0 to 255
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::blue(value)
+{
+    setChannel(chBlue, value);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Private functions
+/////////////////////////////////////////////////////////////////////////////
+function RGBLED::setChannel(channel, value)
+{
+    if (value < 0 || value > 255)
+        throw("invalid value");
+    pwm.duty_cycle(channel, 100 * value / 255);
+}
