@@ -9,7 +9,7 @@
 //
 // /* Control a servo on PWM1 channel 0 (pin 6 on Esquilo) */
 // pwm <- PWM(1)
-// servo <- Servo(pwm, 6);
+// servo <- Servo(pwm, 0);
 // 
 // /* Set the servo to 20 degrees */
 // servo.position(20);
