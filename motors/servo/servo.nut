@@ -113,6 +113,8 @@ function Servo::setFrequency(_frequency)
 function Servo::position(_position)
 {
     local duty;
+
+    _position = _position.tofloat();
     
     if (_position < min_range || _position > max_range)
         throw("position out of range");
@@ -120,7 +122,7 @@ function Servo::position(_position)
     local max_duty = max_pulse / 10.0 * frequency;
     local min_duty = min_pulse / 10.0 * frequency;
     
-    duty = (1.0 * _position - min_range) / (max_range - min_range) * (max_duty - min_duty) + min_duty;
+    duty = (_position - min_range) / (max_range - min_range) * (max_duty - min_duty) + min_duty;
     
     pwm.duty_cycle(channel, duty);
     pwm.on(channel);
