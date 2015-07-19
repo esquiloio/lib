@@ -39,7 +39,7 @@ function setIsDiscoOn(value)
 // Returns a random color in range 0 to 255
 function randomColor()
 {
-    return (rand().tofloat() / RAND_MAX) * 255;
+    return floor((rand().tofloat() / RAND_MAX) * 255);
 }
 
 // Background loop
