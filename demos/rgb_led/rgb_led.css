@@ -1,0 +1,151 @@
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+h1 small {
+  font-size: 51%;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+.container {
+  min-width: 640px;
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 1000px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.title {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .title {
+    border-bottom: 0;
+  }
+}
+
+.well {
+  background-color: #E0E0E0;
+}
+
+.slider-example {
+  padding: 10px 0;
+  margin: 35px 0;
+}
+
+#destroyEx5Slider, #ex6CurrentSliderValLabel, #ex7-enabled {
+  margin-left: 45px;
+}
+
+#ex6SliderVal {
+  color: green;
+}
+
+#slider12a .slider-track-high, #slider12c .slider-track-high {
+  background: green;
+}
+
+#slider12b .slider-track-low, #slider12c .slider-track-low {
+  background: red;
+}
+
+#slider12c .slider-selection {
+  background: yellow;
+}
+
+/* Example 1 custom styles */
+#ex1Slider .slider-selection {
+  background: #BABABA;
+}
+
+/* Example 3 custom styles */
+/*#RGB {*/
+/*height: 120px;*/
+/*background: rgb(128, 128, 128);*/
+/*}*/
+#RC .slider-selection {
+  background: #FF8282;
+}
+#RC .slider-handle {
+  background: red;
+}
+#GC .slider-selection {
+  background: #428041;
+}
+#GC .slider-handle {
+  background: green;
+}
+#BC .slider-selection {
+  background: #8283FF;
+}
+#BC .slider-handle {
+  border-bottom-color: blue;
+}
+#R, #G, #B {
+  width: 300px;
+}
+
+.slider-track {
+  margin-left: 10px;
+}
+
+.jumbotron {
+  text-align: center;
+  background-color: white;
+}
+
+.slider-well {
+  text-align: center;
+}
+
+.well {
+  background-color: white;
+}

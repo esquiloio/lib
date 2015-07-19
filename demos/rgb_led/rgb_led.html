@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+RGB LED Demo
+
+See README.md for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>RGB LED</title>
+
+  <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap-switch.min.css">
+
+  <link rel="stylesheet" href="rgb_led.css">
+</head>
+
+<body>
+<div class="container">
+
+  <div class="jumbotron">
+    <h1><img src="rgb.jpg" height="128" width="128"> RGB LED <img src="led.png" height="128" width="128"></h1>
+  </div>
+
+  <div class='slider-well well'>
+      <p>
+        <b>R </b> <input type="text" class="rgb-slider span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="RC" id="R" data-slider-tooltip="hide" data-slider-handle="square" />
+      </p>
+      <p>
+        <b>G </b> <input type="text" class="rgb-slider span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="GC" id="G" data-slider-tooltip="hide" data-slider-handle="round" />
+      </p>
+      <p>
+        <b>B </b> <input type="text" class="rgb-slider span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="BC" id="B" data-slider-tooltip="hide" data-slider-handle="triangle" />
+      </p>
+      <p>
+        <b>Disco &nbsp;&nbsp;</b>
+        <input type="checkbox" name="disco-switch">
+      </p>
+  </div>
+</div>
+
+<script type="text/javascript" src="../libs/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../libs/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../libs/bootstrap/js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="../libs/bootstrap/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="/js/erpc.js"></script>
+<script type="text/javascript" src="rgb_led.js"></script></body>
+</html>
