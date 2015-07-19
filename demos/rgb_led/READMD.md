@@ -7,7 +7,7 @@ You need an RGB LED connected to your Esquilo with current-limiting resistors
 to run this demo. I used one of these, but any common-cathode one with similar
 voltage requirements shoudl work:
 
-[DFRobot](http://dfrobot.com/wiki/index.php/Triple_Output_LED_RGB_\(SKU:FIT0095\))
+[DFRobot RGB LED](http://dfrobot.com/wiki/index.php/Triple_Output_LED_RGB_\(SKU:FIT0095\))
 
 You also need current limiting resistors for the three color connections.
  
