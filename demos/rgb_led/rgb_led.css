@@ -149,3 +149,7 @@ h1 small {
 .well {
   background-color: white;
 }
+
+.rgb-slider {
+  display: inline-block;
+}

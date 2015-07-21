@@ -6,7 +6,7 @@
 // See http://creativecommons.org/publicdomain/zero/1.0/
 
 // Import the RGB LED class
-dofile("sd:/displays/rgbled/rgbled.nut");
+dofile("sd:/lib/displays/rgbled/rgbled.nut");
 
 // RGB LED is on pins 2, 3, and 4 (PWM0 channels 0, 1, and 2)
 led <- RGBLED(PWM(0), 0, 1, 2);
