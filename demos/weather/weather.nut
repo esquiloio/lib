@@ -1,6 +1,6 @@
 // Weather Station Demo
 //
-// See readme.txt for more information.
+// See README.md for more information.
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/

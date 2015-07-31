@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+RGB LED Demo (AngularJS version)
+
+See README.md for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html ng-app="rgbLedApp">
+<head>
+  <meta charset="utf-8">
+  <title>RGB LED</title>
+
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap-switch.min.css">
+
+  <link rel="stylesheet" href="../rgb_led.css">
+
+  <script src="../../libs/jquery/jquery.min.js"></script>
+  <script src="../../libs/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../libs/bootstrap/js/bootstrap-slider.min.js"></script>
+  <script src="../../libs/bootstrap/js/bootstrap-switch.min.js"></script>
+  <script src="../../libs/angular/angular.min.js"></script>
+  <script src="../../libs/angular/angular-bootstrap-slider.min.js"></script>
+  <script src="../../libs/angular/angular-bootstrap-switch.min.js"></script>
+  <script src="rgb_led.js"></script>
+</head>
+<body ng-controller="MainController" ng-style="{'backgroundColor': 'rgb(' + sliders.red + ',' + sliders.green + ',' + sliders.blue + ')' }">
+<div class="container">
+
+  <div class="jumbotron">
+    <h1><img src="../rgb.jpg" height="128" width="128"> RGB LED <img src="../led.png" height="128" width="128"></h1>
+  </div>
+
+  <div class='slider-well well'>
+    <p>
+      <b>R </b> <slider class="rgb-slider span2" ng-model="sliders.red" min="0" max="255" step="1" value="128" slider-id="RC" id="R" tooltip="hide" handle="round"> </slider>
+    </p>
+
+    <p>
+      <b>G </b> <slider class="rgb-slider span2" ng-model="sliders.green" min="0" max="255" step="1" value="128" slider-id="GC" id="G" tooltip="hide" handle="round"> </slider>
+    </p>
+    <p>
+      <b>B </b> <slider class="rgb-slider span2" ng-model="sliders.blue" min="0" max="255" step="1" value="128" slider-id="BC" id="B" tooltip="hide" handle="round"> </slider>
+    </p>
+    <p>
+      <b>Disco &nbsp;&nbsp;</b>
+      <input bs-switch type="checkbox" ng-model="isDiscoOn">
+    </p>
+  </div>
+</div>
+</body>
+
+</html>

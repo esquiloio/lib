@@ -37,7 +37,7 @@ Connect the LCD module to your Esquilo like so:
 | ------------ |-------------------------|------------------------------------|
 | 1 (UART0 TX) |  J1:1 (RS-232 RX)       |                                    |
 | GND          |  J1:2 (RS-232 VSS)      |                                    |
-| 5V           |  J1:3 (RS-232 VDD)       |                                    |
+| 5V           |  J1:3 (RS-232 VDD)      |                                    |
 | GND          |  J3:1 (Backlight GND)   |                                    |
 | 6 (PWM1:CH0) |  J3:2 (Backlight Red)   | ~33 Ohm current-limiting resistor  |
 | 7 (PWM1:CH1) |  J3:3 (Backlight Green) | ~120 Ohm current-limiting resistor |

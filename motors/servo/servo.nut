@@ -9,7 +9,7 @@
 //
 // /* Control a servo on PWM1 channel 0 (pin 6 on Esquilo) */
 // pwm <- PWM(1)
-// servo <- Servo(pwm, 6);
+// servo <- Servo(pwm, 0);
 // 
 // /* Set the servo to 20 degrees */
 // servo.position(20);
@@ -113,6 +113,8 @@ function Servo::setFrequency(_frequency)
 function Servo::position(_position)
 {
     local duty;
+
+    _position = _position.tofloat();
     
     if (_position < min_range || _position > max_range)
         throw("position out of range");

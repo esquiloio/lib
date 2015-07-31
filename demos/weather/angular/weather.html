@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+Weather Station Demo (AngularJS version)
+
+See README.md for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <title>Weather Station</title>
+  <link rel="stylesheet" href="weather.css">
+  <script src="../../libs/angular/angular.min.js"></script>
+  <script src="weather.js"></script>
+</head>
+<body ng-controller="MainController">
+<h1>Weather Station</h1>
+
+<div class="column">
+  <gauge title="Temperature" value="values.temp" label="&deg;F" min="0" max="110">
+  </gauge>
+</div>
+<div class="column">
+  <gauge title="Humidity" value="values.humidity" label="%" min="0" max="130">
+  </gauge>
+</div>
+<div class="column">
+  <gauge title="Pressure" value="values.pressure" label="in" min="29" max="32">
+  </gauge>
+</div>
+
+</body>
+</html>
