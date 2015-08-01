@@ -1,9 +1,11 @@
 /////////////////////////////////////////////////////////////////////////////
-// Onewire class
+// 1-Wire protocol class
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 /////////////////////////////////////////////////////////////////////////////
+//
+// Note: You MUST externally connect the UART Tx and Rx pins together
 //
 // Example usage:
 //
@@ -23,11 +25,26 @@ class Onewire extends Flexwire
     search_rom = blob(8);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// Function:    constructor
+// Description: Create a Onewire instance on a UART bus
+// Arguments:	uartbus - UART bus number to 
+// Return:		None
+/////////////////////////////////////////////////////////////////////////////
 function Onewire::constructor(uartbus)
 {
-    base.constructor(uartbus, 8, 0, 0, 0);
+    // Flexwire parameters
+    // Bit rate: 15.4kbps (64.9us period)
+    // Output zero: 58.4us (9 slots)
+    // Output one: 6.49us (1 slot)
+    // Input drive: 6.49us (1 slot)
+    // Input start: slot 1
+    // Active: low (no invert)
+    // Endian: little
+    base.constructor(uartbus, 9, 1, 1, 1);
     opendrain(true);
 	lendian(true);
+    invert(false);
 	speed(15400);
 }
 
@@ -241,7 +258,7 @@ function Onewire::searchRomNext()
     if (family_type >= 0 && search_rom[0] != family_type)
         return null;
     
-   	return search_rom;
+   	return (clone search_rom);
 }
     
 /////////////////////////////////////////////////////////////////////////////

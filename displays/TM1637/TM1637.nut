@@ -5,11 +5,11 @@
 // See http://creativecommons.org/publicdomain/zero/1.0/
 /////////////////////////////////////////////////////////////////////////////
 
-const TM1367_DATA_WRITE = 0x40;
-const TM1367_DATA_READ = 0x42;
+const TM1367_DATA_WRITE       = 0x40;
+const TM1367_DATA_READ        = 0x42;
 const TM1367_DATA_WRITE_FIXED = 0x44;
-const TM1367_ADDR_WRITE = 0xc0;
-const TM1367_DISPLAY_CONTROL = 0x80;
+const TM1367_ADDR_WRITE       = 0xc0;
+const TM1367_DISPLAY_CONTROL  = 0x80;
 
 class TM1637
 {

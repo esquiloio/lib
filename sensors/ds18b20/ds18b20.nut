@@ -28,8 +28,14 @@ class DS18B20
     rom = null;
 }
 
-const DS18B20_ROM_FAMILY = 0x28;
-
+/////////////////////////////////////////////////////////////////////////////
+// Function:    constructor
+// Description: _onewire - Onewire bus instance to communicate over
+//              _ rom - Blob with the 9 byte ROM code to address or null
+//              to skip address
+// Arguments:	None
+// Return:		None
+/////////////////////////////////////////////////////////////////////////////
 function DS18B20::constructor(_onewire, _rom)
 {
     onewire = _onewire;
