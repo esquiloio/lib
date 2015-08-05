@@ -20,6 +20,7 @@
 //   delay(50);
 // }
 //
+require("Flexwire");
 
 class WS2812
 {

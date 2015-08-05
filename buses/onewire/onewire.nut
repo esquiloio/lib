@@ -17,6 +17,8 @@
 // onewire.skipRom();
 // data <- onewire.commandRead(0xbe, 9)
 //
+require("Flexwire");
+
 class Onewire extends Flexwire
 {
     last_discrepancy = 0;
