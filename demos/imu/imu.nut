@@ -4,6 +4,8 @@
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
+require(["system", "string", "math", "I2C", "nv"]);
+
 dofile("sd:/lib/sensors/FXOS8700/fxos8700.nut");
 dofile("sd:/lib/sensors/fxas21002/fxas21002.nut");
 dofile("sd:/lib/algorithms/madgwickahrs/MadgwickAHRS.nut");

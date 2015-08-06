@@ -5,6 +5,8 @@
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 /////////////////////////////////////////////////////////////////////////////
+require("math");
+
 class MadgwickAHRS
 {
     sampleFreq = 0;

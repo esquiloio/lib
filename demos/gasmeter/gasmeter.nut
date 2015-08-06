@@ -10,6 +10,8 @@
 // Parameters:  array - array reference to the data series
 //              now - the current index for the data series
 // Return:      none
+require(["system", "GPIO", "nv"]);
+
 function shiftData(array, now)
 {
     local delta = now - array[0];
