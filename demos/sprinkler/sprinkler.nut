@@ -8,6 +8,8 @@
 // Zone Class
 //
 // Manage a sprinkler zone controlled by a GPIO based on a time schedule
+require(["system", "GPIO", "nv", "Timer"]);
+
 class Zone
 {
     // Function:    Class Constructor

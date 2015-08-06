@@ -4,6 +4,7 @@
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
+require(["I2C", "GPIO"]);
 
 dofile("sd:/lib/sensors/mpl3115a2/mpl3115a2.nut");
 dofile("sd:/lib/sensors/htu21d/htu21d.nut");

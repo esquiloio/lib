@@ -22,11 +22,8 @@ The demo consists of three files:
 The following Squirrel libraries are required by the demo. Ensure they are
 enabled in the System menu before running weather.nut.
 
-  * system
-  * string
+  * I2C
   * GPIO
-  * nv
-  * Timer
 
 You must run the weather.nut squirrel nut on your Esquilo prior to opening
 the web interface from your browser.  Even though the nut runs and exits,

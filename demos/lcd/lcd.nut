@@ -4,6 +4,7 @@
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
+require(["UART", "PWM"]);
 
 dofile("sd:/lib/displays/NHDSerial/NHDSerial.nut");
 dofile("sd:/lib/displays/RGBLED/RGBLED.nut");

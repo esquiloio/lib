@@ -4,6 +4,7 @@
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
+require("math");
 
 // Import the WS2812 class
 dofile("sd:/lib/displays/ws2812/ws2812.nut");

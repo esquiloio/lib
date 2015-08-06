@@ -4,6 +4,7 @@
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
+require(["PWM", "math"]);
 
 // Import the RGB LED class
 dofile("sd:/lib/displays/rgbled/rgbled.nut");
