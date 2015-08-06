@@ -13,24 +13,25 @@ const TM1367_DISPLAY_CONTROL  = 0x80;
 
 class TM1637
 {
-    clk = null;
-    data = null;
+    _clk = null;
+    _data = null;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Function:    constructor
 // Description: Create a TM1367 class instance
-// Arguments:   None
+// Arguments:   clk - GPIO instance for clock signal
+//              data - GPIO instance for _data signal
 // Return:      None
 /////////////////////////////////////////////////////////////////////////////
-function TM1637::constructor(_clk, _data)
+function TM1637::constructor(clk, data)
 {
-	clk = _clk;
-    data = _data;
+	_clk = clk;
+    _data = data;
     
-    clk.output();
-    data.opendrain(true);
-    data.output();
+    _clk.output();
+    _data.opendrain(true);
+    _data.output();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -111,9 +112,9 @@ function TM1637::command(id)
 
 /////////////////////////////////////////////////////////////////////////////
 // Function:    commandWrite
-// Description: Write a command and a data value to the device
+// Description: Write a command and a _data value to the device
 // Arguments:   id - the command byte
-//              value - the data byte
+//              value - the _data byte
 // Return:      None
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::commandWrite(id, value)
@@ -126,9 +127,9 @@ function TM1637::commandWrite(id, value)
 
 /////////////////////////////////////////////////////////////////////////////
 // Function:    commandRead
-// Description: Write a command and read a data value from the device
+// Description: Write a command and read a _data value from the device
 // Arguments:   id - the command byte
-// Return:      the data byte read
+// Return:      the _data byte read
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::commandRead(id)
 {
@@ -150,10 +151,10 @@ function TM1637::commandRead(id)
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::start()
 {
-    clk.high();
-    data.high();
-    data.low();
-    clk.low();
+    _clk.high();
+    _data.high();
+    _data.low();
+    _clk.low();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -164,10 +165,10 @@ function TM1637::start()
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::stop()
 {
-    clk.low();
-    data.low();
-    clk.high();
-    data.high();
+    _clk.low();
+    _data.low();
+    _clk.high();
+    _data.high();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -179,20 +180,20 @@ function TM1637::stop()
 function TM1637::writeByte(value)
 {
     for(local i = 0; i < 8; i++) {
-        clk.low();
+        _clk.low();
         if (value & 0x01)
-            data.high();
+            _data.high();
         else
-            data.low();
+            _data.low();
         value = (value >> 1);
-        clk.high();
+        _clk.high();
     }
     
-    data.high();
-    clk.low();
-    clk.high();
+    _data.high();
+    _clk.low();
+    _clk.high();
     
-  	if (data.read())
+  	if (_data.read())
         throw("write nack");
 }
 
@@ -206,18 +207,18 @@ function TM1637::readByte()
 {
     local value = 0;
     
-    data.high();
+    _data.high();
     
     for(local i = 0; i < 8; i++) {
-        clk.low();
-        clk.high();
-        if (data.ishigh())
+        _clk.low();
+        _clk.high();
+        if (_data.ishigh())
         	value = value | (1 << i);
     }
     
-    data.low();
-    clk.low();
-    clk.high();
+    _data.low();
+    _clk.low();
+    _clk.high();
     
     return value;
 }
