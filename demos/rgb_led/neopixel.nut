@@ -47,7 +47,9 @@ function randomColor()
 // Background loop
 const DISCO_DELAY_MS = 150;
 while (true) {
-    if (isDiscoOn)
+    if (isDiscoOn) {
         led.setColors(0, randomColor(), randomColor(), randomColor());
+        led.update();
+    }
     delay(DISCO_DELAY_MS);
 }
