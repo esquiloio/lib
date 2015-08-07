@@ -1,5 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
-// DS18B20 class
+// Maxim DS18B20 1-Wire temperature sensor class
+//
+// 1-Wire Family: 0x28
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
@@ -7,11 +9,11 @@
 //
 // Example usage:
 //
-// /* Create a Onewire instance on UART1 */
+// /* Create a _onewire instance on UART1 */
 // onewire <- Onewire(1);
 //
 // /* Search for the DS18B20 on the bus */
-// rom <- onewire.searchRomFamily(DS18B20_ROM_FAMILY);
+// rom <- onewire.searchRomFamily(0x28);
 // if (!rom)
 //    throw("DS18B20 not found");
 //
@@ -24,22 +26,22 @@
 //
 class DS18B20
 {
-    onewire = null;
-    rom = null;
+    _onewire = null;
+    _rom = null;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Function:    constructor
-// Description: _onewire - Onewire bus instance to communicate over
-//              _ rom - Blob with the 9 byte ROM code to address or null
+// Description: onewire - _onewire bus instance to communicate over
+//              rom - Blob with the 9 byte ROM code to address or null
 //              to skip address
 // Arguments:	None
 // Return:		None
 /////////////////////////////////////////////////////////////////////////////
-function DS18B20::constructor(_onewire, _rom)
+function DS18B20::constructor(onewire, rom)
 {
-    onewire = _onewire;
-    rom = _rom;
+    _onewire = onewire;
+    _rom = rom;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -50,10 +52,10 @@ function DS18B20::constructor(_onewire, _rom)
 /////////////////////////////////////////////////////////////////////////////
 function DS18B20::address()
 {
-    if (rom)
-	    onewire.matchRom(rom);
+    if (_rom)
+	    _onewire.matchRom(_rom);
     else
-    	onewire.skipRom();
+    	_onewire.skipRom();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -65,7 +67,7 @@ function DS18B20::address()
 function DS18B20::convertT()
 {
     address();
-    onewire.writeCommand(0x44, null);
+    _onewire.writeCommand(0x44, null);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -76,7 +78,7 @@ function DS18B20::convertT()
 /////////////////////////////////////////////////////////////////////////////
 function DS18B20::isDone()
 {
-    onewire.readbit();
+    _onewire.readbit();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -87,12 +89,14 @@ function DS18B20::isDone()
 /////////////////////////////////////////////////////////////////////////////
 function DS18B20::readT()
 {
+    local data = blob(2);
+    
     convertT();
     
-    while (!onewire.readbit())
+    while (!_onewire.readbit())
         delay(50);
 
-    local data = readScratch();
+    readScratch(data);
 
     return data.readn('s') / 16.0;
 }
@@ -100,14 +104,16 @@ function DS18B20::readT()
 /////////////////////////////////////////////////////////////////////////////
 // Function:    readScratch
 // Description: Read the scratch memory
-// Arguments:	None
-// Return:		A 9-byte blob containing the scratch memory or null on
-//              failure
+// Arguments:	scratch - a blob from 1-9 bytes to hold the scratch data
+// Return:		None
 /////////////////////////////////////////////////////////////////////////////
-function DS18B20::readScratch()
+function DS18B20::readScratch(scratch)
 {
+    if (scratch.len() < 1 || scratch.len() > 9)
+        throw("invalid blob");
+    
     address();
-    return onewire.readCommand(0xbe, 9);
+    _onewire.readCommand(0xbe, scratch);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -128,7 +134,7 @@ function DS18B20::writeScratch(th, tl, config)
     data[2] = config;
     
     address();
-    onewire.writeCommand(0x4e, data);
+    _onewire.writeCommand(0x4e, data);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -141,7 +147,7 @@ function DS18B20::writeScratch(th, tl, config)
 function DS18B20::copyScratch()
 {
     address();
-    onewire.writeCommand(0x48, null);
+    _onewire.writeCommand(0x48, null);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -154,9 +160,9 @@ function DS18B20::copyScratch()
 function DS18B20::recallE2()
 {
     address();
-    onewire.writeCommand(0xb8, data);
+    _onewire.writeCommand(0xb8, data);
     
-    while (!onewire.readbit())
+    while (!_onewire.readbit())
         delay(50);
 }
 
@@ -169,6 +175,6 @@ function DS18B20::recallE2()
 function DS18B20::readPower()
 {
     address();
-    onewire.writeCommand(0xb4, null);
-	return onewire.readbit();
+    _onewire.writeCommand(0xb4, null);
+	return _onewire.readbit();
 }

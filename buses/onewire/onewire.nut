@@ -21,10 +21,10 @@ require("Flexwire");
 
 class Onewire extends Flexwire
 {
-    last_discrepancy = 0;
-    last_device = true;
-    family_type = -1;
-    search_rom = blob(8);
+    _last_discrepancy = 0;
+    _last_device = true;
+    _family_type = -1;
+    _search_rom = blob(8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ function Onewire::skipRom()
 {
     reset();
     
-    write(0xcc);
+    writebyte(0xcc);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -150,9 +150,9 @@ function Onewire::skipRom()
 /////////////////////////////////////////////////////////////////////////////
 function Onewire::searchRomFirst()
 {
-    last_discrepancy = -1;
-    last_device = false;
-    family_type = -1;
+    _last_discrepancy = -1;
+    _last_device = false;
+    _family_type = -1;
     
     return searchRomNext();
 }
@@ -161,19 +161,19 @@ function Onewire::searchRomFirst()
 // Function:    searchRomFamily
 // Description: Start a slave device search limited to a device family type.
 //              Subsequent device are found with searchRomNext.
-// Arguments:	_family_type - device family type to search (0-255)
+// Arguments:	family_type - device family type to search (0-255)
 // Return:		ROM code for first slave device found on the bus or null
 //              if none was found
 /////////////////////////////////////////////////////////////////////////////
-function Onewire::searchRomFamily(_family_type)
+function Onewire::searchRomFamily(family_type)
 {
-    search_rom[0] = _family_type;
+    _search_rom[0] = family_type;
     for (local i = 1; i < 8; i++)
-        search_rom[i] = 0;
+        _search_rom[i] = 0;
     
-    last_discrepancy = 64;
-    last_device = false;
-    family_type = _family_type;
+    _last_discrepancy = 64;
+    _last_device = false;
+    _family_type = family_type;
     
     return searchRomNext();
 }
@@ -196,7 +196,7 @@ function Onewire::searchRomNext()
     local byte_mask;
     local search_bit;
 
-    if (last_device)
+    if (_last_device)
     	return null;
 
     if (!reset())
@@ -225,12 +225,12 @@ function Onewire::searchRomNext()
         else {
             // If the discrepency is prior to the last one, then
             // use the bit from the saved ROM.
-            if (bit_number < last_discrepancy)
-                search_bit = ((search_rom[byte_number] & byte_mask) != 0);
+            if (bit_number < _last_discrepancy)
+                search_bit = ((_search_rom[byte_number] & byte_mask) != 0);
             // Else the bit is 1 if we are at the same bit position as the
             // last discrepency else the bit is 0
             else
-                search_bit = (bit_number == last_discrepancy);
+                search_bit = (bit_number == _last_discrepancy);
 
             // Save the last zero bit position
             if (!search_bit)
@@ -239,28 +239,28 @@ function Onewire::searchRomNext()
         
         // Set the bit in the saved ROM 
         if (search_bit)
-            search_rom[byte_number] = search_rom[byte_number] | byte_mask;
+            _search_rom[byte_number] = _search_rom[byte_number] | byte_mask;
         else
-            search_rom[byte_number] = search_rom[byte_number] & ~byte_mask;
+            _search_rom[byte_number] = _search_rom[byte_number] & ~byte_mask;
         
         // Write our chosen bit onto the bus
         writebit(search_bit);
     }
     
     // Check if the match is valid
-    if (bit_number != 64 || calcCrc8(search_rom) != 0)
+    if (bit_number != 64 || calcCrc8(_search_rom) != 0)
         return null;
 
-    last_discrepancy = last_zero;
+    _last_discrepancy = last_zero;
 
-    if (last_discrepancy == 0)
-        last_device = true;
+    if (_last_discrepancy == 0)
+        _last_device = true;
     
     // Check the family if doing a family search
-    if (family_type >= 0 && search_rom[0] != family_type)
+    if (_family_type >= 0 && _search_rom[0] != _family_type)
         return null;
     
-   	return (clone search_rom);
+   	return (clone _search_rom);
 }
     
 /////////////////////////////////////////////////////////////////////////////
@@ -271,18 +271,13 @@ function Onewire::searchRomNext()
 // Function:    readCommand
 // Description: Execute a 1-Wire read command after the device is addressed
 // Arguments:	commandId - command ID byte (0-255)
-//              length - number of bytes to read
-// Return:		Blob containing the bytes read
+//              data - blob to contain the bytes read
+// Return:		None
 /////////////////////////////////////////////////////////////////////////////
-function Onewire::readCommand(commandId, length)
+function Onewire::readCommand(commandId, data)
 {
-    local data;
-    
     writebyte(commandId);
-    data = blob(length);
     read(data);
-    
-    return data;
 }
 
 /////////////////////////////////////////////////////////////////////////////
