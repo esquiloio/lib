@@ -37,6 +37,10 @@ class WS2812
 /////////////////////////////////////////////////////////////////////////////
 function WS2812::constructor(uartbus, devices)
 {
+    // Only UART0 and UART1 have FIFOs to protect against jitter
+    if (uartbus != 0 && uartbus != 1)
+        throw("invalid UART (must be 0 or 1)");
+
     if (devices <= 0)
         throw("invalid number of devices");
     
@@ -66,7 +70,7 @@ function WS2812::update()
 {
     // Bump to the highest priority to keep from getting interrupted
     // since that would be interpreted by the devices as a reset
-    local last = priority(0);
+    local last = priority(PRIO_HIGHEST);
 	_flexwire.write(_buffer);
     priority(last);
 }
