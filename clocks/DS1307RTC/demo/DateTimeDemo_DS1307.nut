@@ -1,10 +1,12 @@
+// Real-Time-Clock DS1307RTC Demo
 //
-// Real-Time-Clock DS3231RTC/DS3232RTC Demo
+// See README.md for more information.
 //
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
+require("I2C");
 
-dofile("sd:/projects/DS3232RTC_Demo/DS3232RTC/DS3232RTC.nut");
+dofile("sd:/lib/clocks/DS1307RTC/DS1307RTC.nut");
 
 // Use I2C0 bus
 i2c <- I2C(0);
@@ -14,11 +16,11 @@ i2c <- I2C(0);
  local initFlag = false;
 
 // Create our sensor objects
-rtc <- DS3232RTC(i2c, 0x68);
+rtc <- DS1307RTC(i2c, 0x68);
 
 if (initFlag) {
   // Write date and time to initialize RTC from tm array
-  tm.Second=0; tm.Minute=5; tm.Hour=17; tm.Month=8; tm.Day=8; tm.Year=2015; tm.Wday=6;
+  tm.Second=0; tm.Minute=15; tm.Hour=15; tm.Month=7; tm.Day=12; tm.Year=2015; tm.Wday=7;
   rtc.write(tm);
 }
 
@@ -37,7 +39,5 @@ print(" -> second = "+tm.Second+"\n\n");
 print("Date and Time String:\n");
 print(tm.Month+"/"+tm.Day+"/"+tm.Year+" "+tm.Hour+":"+tm.Minute+":"+tm.Second+"\n");
 
-local tempC = rtc.temperature();
-print("RTCtempC = "+tempC+"\n");
-local tempF = (tempC * 1.8) + 32.0;
-print("RTCtempF = "+tempF+"\n");
+
+
