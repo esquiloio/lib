@@ -27,6 +27,8 @@
  * wiper to LCD VO pin (pin 3) (on backpack)
 */ 
 
+require("SPI");
+
 // include the LiquidCrystal library code:
 dofile("sd:/LIB/DISPLAYS/LiquidCrystal/LiquidCrystalSPI.nut");
 

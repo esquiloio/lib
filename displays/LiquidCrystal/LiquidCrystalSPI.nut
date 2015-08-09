@@ -149,8 +149,8 @@ function LiquidCrystalSPI::begin( _cols, _lines) {
   // according to datasheet, we need at least 40ms after power rises above 2.7V
   // before sending commands. Esquilo can turn on way before 4.5V so we'll wait 50
 
-//  delayMicroseconds(50000); 
-  delayMicroseconds(5000); 
+//  udelay(50000); 
+  udelay(5000); 
 
   // Now we pull both RS and R/W low to begin commands (enable will toggle high/low)
   _buildData(rs_pin, LOW);
@@ -167,10 +167,10 @@ function LiquidCrystalSPI::begin( _cols, _lines) {
   // page 45 figure 23
     
   command(LCD_FUNCTIONSET | displayfunction);    // Send function set command sequence
-  delayMicroseconds(4500);                       // wait more than 4.1ms
+  udelay(4500);                       // wait more than 4.1ms
 
   command(LCD_FUNCTIONSET | displayfunction);    // second try
-  delayMicroseconds(150);
+  udelay(150);
   
   command(LCD_FUNCTIONSET | displayfunction);    // third go
   command(LCD_FUNCTIONSET | displayfunction);      // finally, set # lines, font size, etc.
@@ -211,13 +211,13 @@ function LiquidCrystalSPI::init(_cl, _rw)
 function LiquidCrystalSPI::clear()
 {
   command(LCD_CLEARDISPLAY);  // clear display, set cursor position to zero
-  delayMicroseconds(2000);  // this command takes a long time!
+  udelay(2000);  // this command takes a long time!
 }
 
 function LiquidCrystalSPI::home()
 {
   command(LCD_RETURNHOME);  // set cursor position to zero
-  delayMicroseconds(2000);  // this command takes a long time!
+  udelay(2000);  // this command takes a long time!
 }
 
 function LiquidCrystalSPI::setCursor(_col, _row)
@@ -371,13 +371,13 @@ function LiquidCrystalSPI::print(str) {
 function LiquidCrystalSPI::pulseEnable() {
   _buildData(enable_pin, LOW);	// build SPIbuff data
   _digitalWrite();
-  delayMicroseconds(1);    
+  udelay(1);    
   _buildData(enable_pin, HIGH);	// build SPIbuff data
   _digitalWrite();
-  delayMicroseconds(1);		// enable pulse must be >450ns
+  udelay(1);		// enable pulse must be >450ns
   _buildData(enable_pin, LOW);	// build SPIbuff data
   _digitalWrite();
-  delayMicroseconds(100);	// commands need > 37us to settle
+  udelay(100);	// commands need > 37us to settle
 }
 
 function LiquidCrystalSPI::write4bits(_value) {

@@ -41,6 +41,8 @@
  
  */
 
+require("SPI");
+
 // include the library code:
 dofile("sd:/LIB/DISPLAYS/LiquidCrystal/LiquidCrystalSPI.nut");
 
