@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+Oscilloscope Demo
+
+See README.md for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Esquiloscope</title>
+  <link rel="stylesheet" href="oscope.css" type="text/css" />
+  <script type="text/javascript" src="/js/erpc.js"></script>
+  <script type="text/javascript" src="oscope.js"></script>
+</head>
+<body>
+    <div id="scope">
+        <canvas id="canvas" width="840" height="580"></canvas>
+        <form id="controls">
+            <fieldset>
+                <legend>Run Control</legend>
+               	<input type="checkbox" id="run" value="1">
+                <label for="run">Run/Stop</label>
+                <input type="button" id="single" value="Single">
+            </fieldset>
+            <fieldset>
+                <legend>Horizontal</legend>
+                <div class="center">Scale
+                    <input type="range" id="hscale" class="hslider" min="0" max="9" step="1">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Vertical</legend>
+                <div>
+                	<input type="checkbox" id="chan1_enable" class="chan_input">
+                    <label for="chan1_enable">Channel 1</label>
+                    <div class="lslider">Scale<input type="range" id="chan1_scale" orient="vertical" class="vslider" min="0" max="8" step="1"></div>
+                    <div class="rslider">Position<input type="range" id="chan1_offset" orient="vertical" class="vslider" min="0" max="99" step="1"></div>
+                </div>
+                <div>
+                	<input type="checkbox" id="chan2_enable" class="chan_input">
+                    <label for="chan2_enable">Channel 2</label>
+                    <div class="lslider">Scale<input type="range" id="chan2_scale" orient="vertical" class="vslider" min="0" max="8" step="1"></div>
+                    <div class="rslider">Position<input type="range" id="chan2_offset" orient="vertical" class="vslider" min="0" max="99" step="1"></div>
+                </div>
+            </fieldset>
+            <img src="/images/esquilo.png" alt="">
+        </form>
+    </div>
+</body>
+</html>
