@@ -5,7 +5,7 @@ Esquilo from any web browser.
 
 You need an RGB LED connected to your Esquilo with current-limiting resistors
 to run this demo. I used one of these, but any common-cathode one with similar
-voltage requirements shoudl work:
+voltage requirements should work:
 
 [DFRobot RGB LED](http://dfrobot.com/wiki/index.php/Triple_Output_LED_RGB_\(SKU:FIT0095\))
 
@@ -24,13 +24,6 @@ The demo consists of three main files:
     ERPC requests from the JavaScript web interface to control the color.
   * rgb_led.html - Contains the HTML and JavaScript for the web interface.
   * rgb_led.css  - Cascading style sheet for the web interface.
-
-The following Squirrel libraries are required by the demo. Ensure they are
-enabled in the System menu before running weather.nut.
-
-  * system
-  * math
-  * PWM
 
 You must run the rgb_led.nut Squirrel nut on your Esquilo prior to opening
 the web interface from your browser. To run this nut when Esquilo boots, you
