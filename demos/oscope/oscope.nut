@@ -46,46 +46,44 @@ function loop()
     while (!server.available())
         delay(10);
 
-    local socket = server.accept();
-    if (socket) {
+    try {
+        local socket = server.accept();
         print("connected\n");
        	socket.binary(true);
 
-        try {
-            while (socket.isconnected()) {
-                local c0 = chan0;
-                local c1 = chan1;
-                try {
-                    if (c0)
-                        adc0.readblob(0, buf0);
-                    if (c1)
-                        adc1.readblob(0, buf1);
-                    if (c0)
- 	                   adc0.waitdone();
-                    if (c1)
- 	                   adc1.waitdone();
-                }
-                catch (error)
-                {
-                    // Continue after ADC errors
-                    print(error + "\n");
-                }
-                if (c0) {
-                    socket.write(0);
-                    socket.writeblob(buf0);
-                }
-                if (c1) {
-                    socket.write(1);
-                    socket.writeblob(buf1);
-                }
-
-                delay(10);
+        while (socket.isconnected()) {
+            local c0 = chan0;
+            local c1 = chan1;
+            try {
+                if (c0)
+                    adc0.readblob(0, buf0);
+                if (c1)
+                    adc1.readblob(0, buf1);
+                if (c0)
+                   adc0.waitdone();
+                if (c1)
+                   adc1.waitdone();
             }
+            catch (error)
+            {
+                // Continue after ADC errors
+                print(error + "\n");
+            }
+            if (c0) {
+                socket.write(0);
+                socket.writeblob(buf0);
+            }
+            if (c1) {
+                socket.write(1);
+                socket.writeblob(buf1);
+            }
+
+            delay(10);
         }
-        catch (error)
-        {
-            print(error + "\n");
-        }
+    }
+    catch (error)
+    {
+        print(error + "\n");
     }
 }
 
