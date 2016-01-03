@@ -1,0 +1,29 @@
+<% for(var i=0; i<length; i++) { %>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <select id="note-<%= i %>" class="form-control">
+                    <option value="c">c (261 Hz)</option>
+                    <option value="d">d (294 Hz)</option>
+                    <option value="e">e (329 Hz)</option>
+                    <option value="f">f (349 Hz)</option>
+                    <option value="g">g (392 Hz)</option>
+                    <option value="a">a (440 Hz)</option>
+                    <option value="b">b (493 Hz)</option>
+                    <option value="C">C (523 Hz)</option>
+                    <option value=" ">rest</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <select id="beats-<%= i %>" class="form-control">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+            </div>
+        </div>
+    </div>
+<% } %>

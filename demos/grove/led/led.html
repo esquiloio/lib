@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+Grove LED Demo
+
+See README.md for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Grove LED</title>
+
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="../../libs/bootstrap/css/jumbotron-narrow.css">
+  <link rel="stylesheet" href="../demo.css">
+  <link rel="stylesheet" href="led.css">
+</head>
+
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <img src="files/led.png" width="80%" style="display: block; margin-left: auto; margin-right: auto; margin-top: 2em; margin-bottom: 2em;">
+    <h1>Grove LED</h1>
+  </div>
+
+  <div class='well getting-started'>
+    <p><a class="btn btn-primary" href="README.html" role="button">README &raquo;</a>
+      <a id='run-button' class="btn btn-success" role="button">
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run <b>led.nut</b>
+      </a></p>
+  </div>
+
+  <div class='well'>
+    <p>
+    <h3>Speed</h3>
+    <input type="text" class="speed-slider" value="" data-slider-min="0" data-slider-max="255"
+           data-slider-step="1" data-slider-value="128" data-slider-id="speed" id="speed-slider"
+           data-slider-tooltip="hide" />
+    </p>
+  </div>
+</div>
+
+<script type="text/javascript" src="../../libs/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../libs/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../libs/bootstrap/js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="../../libs/ejs/ejs.js"></script>
+<script type="text/javascript" src="/js/util.js"></script>
+<script type="text/javascript" src="/js/rpc.js"></script>
+<script type="text/javascript" src="/js/erpc.js"></script>
+<script type="text/javascript" src="../demo.js"></script>
+<script type="text/javascript" src="led.js"></script>
+    
+</body>
+</html>
