@@ -10,7 +10,7 @@ This demo pulses an LED with a breathing effect. The speed can be controlled rem
 * Grove Base Shield
 * Grove LED Socket module
 * LED of your choice 
-* Two Grove cables
+* Grove cable
 
 ## Running the Demo
 
@@ -24,7 +24,7 @@ Slide the VCC switch on the Grove Base Shield to 5V. This will supply 5V to the 
 
 ### Insert LED
 
-Insert the LED into the Grove LED module socket. The longer pin goes into the hole marked wiht a '+'.
+Insert the LED into the Grove LED module socket. The longer pin goes into the hole marked with a '+'.
 
 ### Connect Grove LED to D3
 
