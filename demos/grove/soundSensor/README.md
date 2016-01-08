@@ -1,15 +1,14 @@
-# Grove Rotary Angle Sensor Demo
+# Grove Sound Sensor Demo
 
-This demo controls the brightness of an LED with the Grove Rotary Angle Sensor
-module.
+This demo controls the brightness of an LED with the Grove Sound Sensor module.
 
-<img src="rotaryAngleSensor.png" style="max-width: 450px;">
+<img src="soundSensor.png" style="max-width: 450px;">
 
 ## Requirements
 
 * Esquilo Air
 * Grove Base Shield
-* Grove Rotary Angle Sensor module
+* Grove Sound Sensor module
 * Grove LED Socket module
 * LED of your choice 
 * Two Grove cables
@@ -25,10 +24,10 @@ Disconnect power from your Esquilo and carefully insert the Grove Base Shield.
 Slide the VCC switch on the Grove Base Shield to 3.3V (because the Esquilo
 analog-to-digital converter (ADC) uses a 3.3V reference).
 
-### Connect Grove Rotary Angle Sensor to A0
+### Connect Grove Sound Sensor to A0
 
-Use a Grove Cable to connect the Grove Rotary Angle Sensor module to the Base
-Shield's analog port 0 (A0).
+Use a Grove Cable to connect the Grove Sound Sensor module to the Base Shield's
+analog port 0 (A0).
 
 ### Insert LED
 
@@ -40,9 +39,9 @@ hole marked with a '+'.
 Use a Grove Cable to connect the Grove LED module to the Base Shield's digital
 port 3 (D3).
 
-### Run rotaryAngleSensor.nut
+### Run soundSensor.nut
 
-Connect power to your Esquilo and run the *rotaryAngleSensor.nut* code.
+Connect power to your Esquilo and run the *soundSensor.nut* code.
 
 You can do this using a link on the demo web app (next step) or from the
 [Esquilo IDE](/).
@@ -52,8 +51,8 @@ onboard brightness dial.
 
 ### Open the Demo Web Application
 
-[Rotary Angle Sensor Demo Web App >](rotaryAngleSensor.html)
+[Sound Sensor Demo Web App >](soundSensor.html)
 
-### Change the Brightness
+### Make Some Noise
 
-Use the Rotary Angle Sensor knob to control the LED's brightness. 
+Make some noise and watch the LED's response. 

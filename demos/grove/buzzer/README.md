@@ -2,7 +2,7 @@
 
 This demo lets you play simple songs from a web app.
 
-<img src="files/buzzer.png" style="max-width: 450px;">
+<img src="buzzer.png" style="max-width: 450px;">
 
 ## Requirements
 
@@ -32,8 +32,6 @@ Connect power to your Esquilo and run the *buzzer.nut* code.
 You can do this using a link on the demo web app (next step) or from the [Esquilo IDE](/).
 
 ### Open the Demo Web Application
-
-<img src="files/buzzerWebApp.png" style="max-width: 450px;">
 
 [Buzzer Demo Web App >](buzzer.html)
 

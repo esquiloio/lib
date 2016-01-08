@@ -2,7 +2,7 @@
 
 This demo pulses an LED with a breathing effect. The speed can be controlled remotely with the demo web app.
 
-<img src="files/led.png" style="max-width: 450px;">
+<img src="led.png" style="max-width: 450px;">
 
 ## Requirements
 
@@ -39,8 +39,6 @@ You can do this using a link on the demo web app (next step) or from the [Esquil
 Note: If the LED is dim or isn't lighting up, trying adjusting the module's onboard brightness dial.
 
 ### Open the Demo Web Application
-
-<img src="files/ledWebApp.png" style="max-width: 450px;">
 
 [LED Demo Web App >](led.html)
 

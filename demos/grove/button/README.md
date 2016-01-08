@@ -4,7 +4,7 @@ This simple demo controls a Grove LED from both a Grove Button and a web applica
 
 It doubles as a Grove Touch Sensor demo. To use with the touch sensor, simply swap one in for the button. 
 
-<img src="files/button.png" style="max-width: 450px;">
+<img src="button.png" style="max-width: 450px;">
 
 ## Requirements
 
@@ -44,8 +44,6 @@ Connect power to your Esquilo and run the *button.nut* code.
 You can do this using a link on the demo web app (next step) or from the [Esquilo IDE](/).
 
 ### Open the Demo Web Application
-
-<img src="files/buttonWebApp.png" style="max-width: 450px;">
 
 [Button Demo Web App >](button.html)
 
