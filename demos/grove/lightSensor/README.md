@@ -1,14 +1,14 @@
 # Grove Sound Sensor Demo
 
-This demo flashes an LED when a sound is detected with the Grove Sound Sensor module.
+This demo turns on an LED when low light is sensed with the Grove Light Sensor module.
 
-<img src="soundSensor.png" style="max-width: 450px;">
+<img src="lightSensor.png" style="max-width: 450px;">
 
 ## Requirements
 
 * Esquilo Air
 * Grove Base Shield
-* Grove Sound Sensor module
+* Grove Light Sensor module
 * Grove LED Socket module
 * LED of your choice 
 * Two Grove cables
@@ -24,9 +24,9 @@ Disconnect power from your Esquilo and carefully insert the Grove Base Shield.
 Slide the VCC switch on the Grove Base Shield to 3.3V (because the Esquilo
 analog-to-digital converter (ADC) uses a 3.3V reference).
 
-### Connect Grove Sound Sensor to A0
+### Connect Grove Light Sensor to A0
 
-Use a Grove Cable to connect the Grove Sound Sensor module to the Base Shield's
+Use a Grove Cable to connect the Grove Light Sensor module to the Base Shield's
 analog port 0 (A0).
 
 ### Insert LED
@@ -51,8 +51,11 @@ onboard brightness dial.
 
 ### Open the Demo Web Application
 
-[Sound Sensor Demo Web App >](soundSensor.html)
+[Light Sensor Demo Web App >](lightSensor.html)
 
-### Make Some Noise
+### Lights Out!
 
-Make some noise and watch the LED's response. 
+Turn the light on and off (or just cover and uncover the sensor with your hand)
+and watch the LED respond.
+
+ 
