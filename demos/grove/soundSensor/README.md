@@ -1,6 +1,7 @@
 # Grove Sound Sensor Demo
 
-This demo flashes an LED when a sound is detected with the Grove Sound Sensor module.
+This demo flashes an LED when a sound is detected with the Grove Sound Sensor
+module.
 
 <img src="soundSensor.png" style="max-width: 450px;">
 
