@@ -102,7 +102,7 @@ class Lcd
         if (level < 0 || level > 50)
             throw("invalid contrast");
 
-        _lcd.setContrast(level);
+        _nhd.setContrast(level);
         delay(1);
     }
 
