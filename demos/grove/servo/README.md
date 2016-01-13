@@ -2,7 +2,7 @@
 
 This demo controls a servo from a web page slider.
 
-<img src="servo.png" style="max-width: 450px;">
+![Servo Fritzing image](servo.png)
 
 ## Requirements
 

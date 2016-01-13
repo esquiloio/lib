@@ -3,7 +3,7 @@
 This demo pulses an LED with a breathing effect. The speed can be controlled
 remotely with the demo web app.
 
-<img src="led.png" style="max-width: 450px;">
+![LED Fritzing image](led.png)
 
 ## Requirements
 

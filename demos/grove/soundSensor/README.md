@@ -3,7 +3,7 @@
 This demo flashes an LED when a sound is detected with the Grove Sound Sensor
 module.
 
-<img src="soundSensor.png" style="max-width: 450px;">
+![Sound Sensor Fritzing image](soundSensor.png)
 
 ## Requirements
 

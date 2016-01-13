@@ -1,8 +1,8 @@
-# Grove Sound Sensor Demo
+# Grove Light Sensor Demo
 
 This demo turns on an LED when low light is sensed with the Grove Light Sensor module.
 
-<img src="lightSensor.png" style="max-width: 450px;">
+![Light Sensor Fritzing image](lightSensor.png)
 
 ## Requirements
 

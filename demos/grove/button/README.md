@@ -9,7 +9,7 @@ swap one in for the button.
 It also doubles as a Grove Relay demo. Just swap the LED module with a Relay
 module.
 
-<img src="button.png" style="max-width: 450px;">
+![Button Fritzing image](button.png)
 
 ## Requirements
 

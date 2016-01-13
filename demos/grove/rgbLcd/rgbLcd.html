@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+Grove RGB LCD Demo
+
+See README.md for more information.
+
+This work is released under the Creative Commons Zero (CC0) license.
+See http://creativecommons.org/publicdomain/zero/1.0/
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Grove RGB LCD</title>
+
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap-switch.min.css">
+  <link rel="stylesheet" href="../../libs/bootstrap/css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="../../libs/bootstrap/css/jumbotron-narrow.css">
+  <link rel="stylesheet" href="../demo.css">
+  <link rel="stylesheet" href="rgbLcd.css">
+</head>
+
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <img src="rgbLcd.png" width="80%">
+    <h1>Grove RGB LCD</h1>
+  </div>
+
+  <div class='well getting-started'>
+    <p><a class="btn btn-primary" href="README.html"
+          role="button">README &raquo;</a>
+      <a id='run-button' class="btn btn-success" role="button">
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run
+        <b>rgbLcd.nut</b>
+      </a></p>
+  </div>
+
+  <div class='well'>
+    <h3>Power</h3>
+    <p><input type="checkbox" name="button-switch" id="power" checked>
+    </p>
+    <h3>Backlight</h3>
+    <p>
+      <b>R </b> <input type="text" class="rgb-slider" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="3" data-slider-id="RC" id="R" data-slider-tooltip="hide" data-slider-handle="square" />
+    </p>
+    <p>
+      <b>G </b> <input type="text" class="rgb-slider" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="157" data-slider-id="GC" id="G" data-slider-tooltip="hide" data-slider-handle="round" />
+    </p>
+    <p>
+      <b>B </b> <input type="text" class="rgb-slider" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="235" data-slider-id="BC" id="B" data-slider-tooltip="hide" data-slider-handle="triangle" />
+    </p>
+    <h3>Text</h3>
+    <input type="email" class="form-control" id="text">
+    <br/>
+    <button class="btn btn-primary" type="submit" id="update">Update Text</button>
+  </div>
+</div>
+
+<script type="text/javascript" src="../../libs/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../libs/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../libs/bootstrap/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="../../libs/bootstrap/js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="../../libs/ejs/ejs.js"></script>
+<script type="text/javascript" src="/js/util.js"></script>
+<script type="text/javascript" src="/js/rpc.js"></script>
+<script type="text/javascript" src="/js/erpc.js"></script>
+<script type="text/javascript" src="../demo.js"></script>
+<script type="text/javascript" src="rgbLcd.js"></script>
+
+</body>
+</html>

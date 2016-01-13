@@ -2,7 +2,7 @@
 
 This demo displays the temperature read from a Grove Temperature Sensor module.
 
-<img src="temperatureSensor.png" style="max-width: 450px;">
+![Temperature Sensor Fritzing image](temperatureSensor.png)
 
 ## Requirements
 

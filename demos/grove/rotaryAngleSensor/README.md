@@ -3,7 +3,7 @@
 This demo controls the brightness of an LED with the Grove Rotary Angle Sensor
 module.
 
-<img src="rotaryAngleSensor.png" style="max-width: 450px;">
+![Rotary Angle Sensor Fritzing image](rotaryAngleSensor.png)
 
 ## Requirements
 

@@ -2,7 +2,7 @@
 
 This demo lets you play simple songs from a web app.
 
-<img src="buzzer.png" style="max-width: 450px;">
+![Buzzer Fritzing image](buzzer.png)
 
 ## Requirements
 
