@@ -5,7 +5,7 @@
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 
-require("Crypto");
+require(["Crypto","string"]);
 
 dofile("sd:/lib/algorithms/hmac/hmac.nut");
 dofile("sd:/lib/algorithms/ecb/ecb.nut");
@@ -54,6 +54,7 @@ function testcheck(a, b)
 	    print("Test passed\n\n");
     else
         print("*** TEST FAILED ***\n\n");
+    delay(10);
 }
 
 function ecbtest(name)
