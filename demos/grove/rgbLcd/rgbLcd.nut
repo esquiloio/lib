@@ -6,7 +6,7 @@
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 
-// Uses a Grove Button to control a Grove LED.
+// Controls a Grove RGB LCD
 //  - Connect the Grove RGB LCD to an I2C socket
 //  - Set Grove Base Shield VCC switch to 5V
 
