@@ -4,12 +4,28 @@
 // This work is released under the Creative Commons Zero (CC0) license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
 /////////////////////////////////////////////////////////////////////////////
+// Example usage:
+//
+// /* Grove 4-Digit Display on D6 */
+// display <- TM1637(GPIO(6), GPIO(7));
+//
+// /* 7-segment values for 0-9a-f */
+// segs <- "\x3f\x06\x5b\x4f\x66\x6d\x7d\x07\x7f\x6f\x77\x7c\x39\x5e\x79\x71";
+//
+// /* Show ba55 on the display */
+// display.writeSegments(0, segs[0xb]);
+// display.writeSegments(1, segs[0xa]);
+// display.writeSegments(2, segs[0x5]);
+// display.writeSegments(3, segs[0x5]);
+//
+// /* Turn display on */
+// display.on(4);
 
-const TM1367_DATA_WRITE       = 0x40;
-const TM1367_DATA_READ        = 0x42;
-const TM1367_DATA_WRITE_FIXED = 0x44;
-const TM1367_ADDR_WRITE       = 0xc0;
-const TM1367_DISPLAY_CONTROL  = 0x80;
+const TM1637_DATA_READ        = 0x42;
+const TM1637_DATA_WRITE       = 0x44;
+const TM1637_ADDR_WRITE       = 0xc0;
+const TM1637_DISPLAY_OFF      = 0x80;
+const TM1637_DISPLAY_ON       = 0x88;
 
 class TM1637
 {
@@ -19,9 +35,9 @@ class TM1637
 
 /////////////////////////////////////////////////////////////////////////////
 // Function:    constructor
-// Description: Create a TM1367 class instance
+// Description: Create a TM1637 class instance
 // Arguments:   clk - GPIO instance for clock signal
-//              data - GPIO instance for _data signal
+//              data - GPIO instance for data signal
 // Return:      None
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::constructor(clk, data)
@@ -49,7 +65,8 @@ function TM1637::writeSegments(grid, segments)
     if (segments < 0 || segments > 255)
         throw("invalid segments");
     
-    commandWrite(TM1367_ADDR_WRITE | grid, segments);
+    command(TM1637_DATA_WRITE);
+    commandWrite(TM1637_ADDR_WRITE | grid, segments);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -60,7 +77,7 @@ function TM1637::writeSegments(grid, segments)
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::readKey()
 {
-    local code = commandRead(TM1367_DATA_READ);
+    local code = commandRead(TM1637_DATA_READ);
     
     if (code == 0xff)
         return -1;
@@ -79,7 +96,7 @@ function TM1637::on(brightness)
     if (brightness < 0 || brightness > 7)
         throw("invalid brightness");
     
-	command(TM1367_DISPLAY_CONTROL | 0x8 | brightness);
+	command(TM1637_DISPLAY_ON | brightness);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -90,7 +107,7 @@ function TM1637::on(brightness)
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::off()
 {
-	command(TM1367_DISPLAY_CONTROL);
+	command(TM1637_DISPLAY_OFF);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -112,9 +129,9 @@ function TM1637::command(id)
 
 /////////////////////////////////////////////////////////////////////////////
 // Function:    commandWrite
-// Description: Write a command and a _data value to the device
+// Description: Write a command and a data value to the device
 // Arguments:   id - the command byte
-//              value - the _data byte
+//              value - the data byte
 // Return:      None
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::commandWrite(id, value)
@@ -127,9 +144,9 @@ function TM1637::commandWrite(id, value)
 
 /////////////////////////////////////////////////////////////////////////////
 // Function:    commandRead
-// Description: Write a command and read a _data value from the device
+// Description: Write a command and read a data value from the device
 // Arguments:   id - the command byte
-// Return:      the _data byte read
+// Return:      the data byte read
 /////////////////////////////////////////////////////////////////////////////
 function TM1637::commandRead(id)
 {
@@ -139,7 +156,7 @@ function TM1637::commandRead(id)
     writeByte(id);
     value = readByte();
     stop();
-    
+
     return value;
 }
 
@@ -189,12 +206,22 @@ function TM1637::writeByte(value)
         _clk.high();
     }
     
-    _data.high();
     _clk.low();
+    _data.high();
     _clk.high();
+    _data.input();
     
-  	if (_data.read())
-        throw("write nack");
+    bitDelay();
+    local ack = _data.read();
+    if (_data.islow()) {
+        _data.output();
+        _data.low();
+    }
+    bitDelay();
+    _data.output();
+    bitDelay();
+
+    return ack;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -211,14 +238,26 @@ function TM1637::readByte()
     
     for(local i = 0; i < 8; i++) {
         _clk.low();
-        _clk.high();
         if (_data.ishigh())
         	value = value | (1 << i);
+        _clk.high();
     }
     
-    _data.low();
     _clk.low();
+    _data.low();
     _clk.high();
     
     return value;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// Function:    bitDelay
+// Description: Delay for one bit time
+// Arguments:   None
+// Return:      None
+/////////////////////////////////////////////////////////////////////////////
+function TM1637::bitDelay()
+{
+	udelay(50);
+}
+
